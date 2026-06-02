@@ -1,0 +1,2006 @@
+<!-- 
+
+Built the transports between the tripartite synapse (PAP, Pre- and Post-syaptic neurons). 
+Lipid peroxidation buildup in the pre and post neurons created and transport into astrocyte for detox and catabolisis into ketone bodies
+
+-->
+
+-------------TRANSPORTS BEGINS------------------
+
+-----  Astrocyte_PAP Transports ------
+<!-- 1. Perisynaptic Astrocytic Process (PAP) Compartment and Synaptic Cleft -->
+<compartment id="pap" name="Perisynaptic Astrocytic Process" constant="true"/>
+<compartment id="syn" name="Synaptic cleft" constant="true"/>
+
+
+<!-- 2. Lactate Transport btw cyc - pap and pap - syn  -->
+
+<!-- Lactate Transport from cytosol into PAP -->d
+<reaction metaid="meta_R_L_LACtpap" id="R_L_LACtpap" name="Lactate transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_L_LACtpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_lac__L_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_lac__L_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Lactate transport btw pap and Synaptic Cleft -->d
+<reaction metaid="meta_R_L_LACtsyn" id="R_L_LACtsyn" name="Lactate transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_L_LACtsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_h_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_lac__L_pap" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_lac__L_syn" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_20503"/>
+            <fbc:geneProductRef fbc:geneProduct="G_57274"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20501"/>
+            <fbc:geneProductRef fbc:geneProduct="G_80879"/>
+            <fbc:geneProductRef fbc:geneProduct="G_12215"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+<!-- Proton Transport from cytosol to pap -->d
+<reaction metaid="meta_R_Htpap" id="R_Htpap" name="Proton transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_Htpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_h_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_h_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+<!--3. Glutamine Transport btw cyc - pap and pap - syn  -->
+
+<!-- Glutamine Transport from cytosol into PAP -->d
+<reaction metaid="meta_R_GLNtpap" id="R_GLNtpap" name="Glutamine transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_GLNtpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_gln__L_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_gln__L_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Glutamine transport btw pap and Synaptic Cleft -->d
+<reaction metaid="meta_R_GLNtsyn" id="R_GLNtsyn" name="Glutamine transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLNtsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_gln__L_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_pap" stoichiometry="2" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_gln__L_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_syn" stoichiometry="2" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_209837"/>
+            <fbc:geneProductRef fbc:geneProduct="G_76257"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+<!-- Sodium Transport from cytosol to pap -->d
+<reaction metaid="meta_R_NAtpap" id="R_NAtpap" name="Sodium transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_NAtpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_na1_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_na1_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+<!--3. L-Serine Transport btw cyc - pap and pap - syn  -->
+
+<!-- L-Serine Transport from cytosol into PAP -->d
+<reaction metaid="meta_R_SERtpap" id="R_SERtpap" name="Serine transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_SERtpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_ser__L_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_ser__L_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Serine transport btw pap and Synaptic Cleft -->d
+<reaction metaid="meta_R_SERtsyn" id="R_SERtsyn" name="Serine transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_SERtsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_pap" stoichiometry="2" constant="true"/>
+          <speciesReference species="M_ser__L_pap" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_h_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_syn" stoichiometry="2" constant="true"/>
+          <speciesReference species="M_ser__L_syn" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:geneProductRef fbc:geneProduct="G_209837"/>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+
+<!--4. Cys-Gly Transport btw cyc - pap and pap - syn  -->
+
+<!-- Cys-Gly Transport from cytosol into PAP -->d
+<reaction metaid="meta_R_CGLYtpap" id="R_CGLYtpap" name="Cys-Gly transport, pap" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_CGLYtpap">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_cgly_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_cgly_pap" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Cys-Gly Transport from pap and Synaptic Cleft -->d
+<reaction metaid="meta_R_CGLYtsyn" id="R_CGLYtsyn" name="Cys-Gly transport, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_CGLYtsyn">
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_cgly_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_pap" stoichiometry="2" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_cgly_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_syn" stoichiometry="2" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:geneProductRef fbc:geneProduct="G_57738"/>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+
+
+-----  Pre-synaptic Neuron Transports ------
+<!-- 1. Presynaptic cytoplasm, Presynaptic mitochondrion and Synaptic Cleft Compartments -->
+<compartment id="prec" name="Presynaptic cytoplasm" constant="true"/>
+<compartment id="prem" name="Presynaptic mitochondrion" constant="true"/>
+<compartment id="syn" name="Synaptic cleft" constant="true"/>
+
+
+<!-- 2. Glutamate Transport btw cyc - prec and prec - syn  -->
+
+<!-- Glutamate Transport from cytosol into prec -->d
+<reaction metaid="meta_R_GLUtprec" id="R_GLUtprec" name="Glutamate transport, prec" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_GLUtprec">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_glu__L_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_glu__L_prec" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+<!-- Glutamate transport from prec and Synaptic Cleft -->d
+<reaction metaid="meta_R_GLUtsyn" sboTerm="SBO:0000185" id="R_GLUtsyn" name="Glutamate transport, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLUtsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_glu__L_prec" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_glu__L_syn" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+<!-- 2. Glycine Transport btw cyc - prec and prec - syn  -->
+
+<!-- Glycine Transport from cytosol into prec -->d
+<reaction metaid="meta_R_GLYtprec" id="R_GLYtprec" name="Glycine transport, prec" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_GLYtprec">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_gly_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_gly_prec" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Glycine transport from prec and Synaptic Cleft -->d
+<reaction metaid="meta_R_GLYtsyn" sboTerm="SBO:0000185" id="R_GLYtsyn" name="Glycine transport, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLYtsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_gly_prec" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_gly_syn" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+
+
+-----  Post-synaptic Neuron Transports ------
+<!-- 1. Postsynaptic cytoplasm, Postsynaptic mitochondrion and Synaptic Cleft Compartments -->
+<compartment id="postc" name="Postsynaptic cytoplasm" constant="true"/>
+<compartment id="postm" name="Postsynaptic mitochondrion" constant="true"/>
+<compartment id="syn" name="Synaptic cleft" constant="true"/>
+
+
+<!-- 2. Potassium Transport btw cyc - postc and postc - syn  -->
+
+<!-- Potassium Transport from cytosol into postc -->d
+<reaction metaid="meta_R_Ktpostc" id="R_Ktpostc" name="Potassium transport, postc" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_Ktpostc">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_k_c" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_k_postc" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Potassium transport from postc and Synaptic Cleft -->d
+<reaction metaid="meta_R_Ktsyn" sboTerm="SBO:0000185" id="R_Ktsyn" name="Potassium transport, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_Ktsyn">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_k_postc" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_k_syn" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+-------------TRANSPORTS ENDS------------------
+
+
+
+
+-------------UPTAKES BEGINS------------------
+----------Astrocyte Uptakes --------
+
+<!--1. Glutamate transport from Synaptic Cleft to PAP -->d
+<reaction metaid="meta_R_GLUtpap" sboTerm="SBO:0000185" id="R_GLUtpap" name="Glutamate transport, pap" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLUtpap">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_glu__L_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_k_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_syn" stoichiometry="3" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_glu__L_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_k_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_pap" stoichiometry="3" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_20513"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20510"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20512"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20511"/>
+            <fbc:geneProductRef fbc:geneProduct="G_242607"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+<!-- Glutamate Transport from PAP into cytosol -->d
+<reaction metaid="meta_R_GLUtc" id="R_GLUtc" name="Glutamate transport, cytosol" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_GLUtc">
+        <bqbiol:is>
+          <rdf:Bag />
+        </bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_glu__L_pap" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_glu__L_c" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+
+<!--2. Glycine transport from Synaptic Cleft to PAP -->d
+<reaction metaid="meta_R_GLYtpap" sboTerm="SBO:0000185" id="R_GLYtpap" name="Glycine transport, pap" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLYtpap">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_gly_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_syn" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_gly_pap" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_pap" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_105727"/>
+            <fbc:geneProductRef fbc:geneProduct="G_56774"/>
+            <fbc:geneProductRef fbc:geneProduct="G_67760"/>
+            <fbc:geneProductRef fbc:geneProduct="G_69354"/>
+            <fbc:and>
+              <fbc:geneProductRef fbc:geneProduct="G_74338"/>
+              <fbc:geneProductRef fbc:geneProduct="G_57394"/>
+            </fbc:and>
+            <fbc:and>
+              <fbc:geneProductRef fbc:geneProduct="G_74338"/>
+              <fbc:geneProductRef fbc:geneProduct="G_70008"/>
+            </fbc:and>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+<!-- Glycine Transport from PAP into cytosol -->d
+<reaction metaid="meta_R_GLYtc" id="R_GLYtc" name="Glycine transport, cytosol" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_GLYtc">
+        <bqbiol:is>
+          <rdf:Bag />
+        </bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_gly_pap" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_gly_c" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+<!--3. Potassium transport from Synaptic Cleft to PAP -->d
+<reaction metaid="meta_R_Ktpap" id="R_Ktpap" name="Potassium transport, pap" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_Ktpap">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_k_syn" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_k_pap" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+
+<!-- Potassium Transport from PAP into cytosol -->d
+<reaction metaid="meta_R_Ktc" id="R_Ktc" name="Potassium transport, cytosol" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_Ktc">
+        <bqbiol:is>
+          <rdf:Bag />
+        </bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_k_pap" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_k_c" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+
+----------Pre-synaptic Neuron Uptakes --------
+
+<!-- 1. Lactate transport from Synaptic Cleft to prec -->d
+<reaction metaid="meta_R_L_LACtprec" id="R_L_LACtprec" name="Lactate transport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_L_LACtprec">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_lac__L_syn" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_h_prec" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_lac__L_prec" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_20503"/>
+            <fbc:geneProductRef fbc:geneProduct="G_57274"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20501"/>
+            <fbc:geneProductRef fbc:geneProduct="G_80879"/>
+            <fbc:geneProductRef fbc:geneProduct="G_12215"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+
+<!-- 2. Glutamine Transport from syn to prec -->d
+<reaction metaid="meta_R_GLNtNprec" id="R_GLNtNprec" name="Glutamine transport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_GLNtNprec">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_gln__L_syn" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_syn" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_gln__L_prec" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_na1_prec" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_105727"/>
+            <fbc:geneProductRef fbc:geneProduct="G_67760"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+</reaction>
+
+
+<!-- 3. L-Serine Transport from syn to prec -->d
+<reaction metaid="meta_R_LSERtprec" id="R_LSERtprec" name="L-Serine transport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_LSERtprec">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_ser__L_syn" stoichiometry="1" constant="true"/>
+	<speciesReference species="M_na1_syn" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_ser__L_prec" stoichiometry="1" constant="true"/>
+	<speciesReference species="M_na1_prec" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+  <fbc:geneProductAssociation>
+     <fbc:geneProductRef fbc:geneProduct="G_55963"/>
+	 <fbc:geneProductRef fbc:geneProduct="G_20514"/>
+  </fbc:geneProductAssociation>
+</reaction>
+	  
+
+<!-- Cys-Gly Transport from syn to prec -->d
+<reaction metaid="meta_R_CGLYtprec" id="R_CGLYtprec" name="Cys-Gly transport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_CGLYtprec">
+		    </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_cgly_syn" stoichiometry="1" constant="true"/>
+		  <speciesReference species="M_h_syn" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_cgly_prec" stoichiometry="1" constant="true"/>
+		  <speciesReference species="M_h_prec" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:geneProductRef fbc:geneProduct="G_57738"/>
+        </fbc:geneProductAssociation>
+      </reaction>
+	  
+
+----------Post-synaptic Neuron Uptakes --------
+
+<!-- Sodium Transport from extracellular to syn -->d
+<reaction metaid="meta_R_NAtsyn" id="R_NAtsyn" name="Sodium transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_NAtsyn">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_na1_e" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_na1_syn" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!--1. Sodium Transport from syn to postc -->d
+<reaction metaid="meta_R_NAtpostc" id="R_NAtpostc" name="Sodium transport, postc" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_NAtpostc">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_na1_syn" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_na1_postc" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!-- Calcium Transport from extracellular to syn -->d
+<reaction metaid="meta_R_CAtsyn" id="R_CAtsyn" name="Calcium transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_CAtsyn">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_ca2_e" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_ca2_syn" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+<!--2. Calcium Transport from syn to postc -->d
+<reaction metaid="meta_R_CAtpostc" id="R_CAtpostc" name="Calcium transport, postc" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_CAtpostc">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+  <listOfReactants>
+    <speciesReference species="M_ca2_syn" stoichiometry="1" constant="true"/>
+  </listOfReactants>
+  <listOfProducts>
+    <speciesReference species="M_ca2_postc" stoichiometry="1" constant="true"/>
+  </listOfProducts>
+</reaction>
+
+
+-------------UPTAKES ENDS------------------
+
+
+----------- METABOLITES IN NEW COMPARTMENTS ----------------
+
+<!--1. Metabolite for lactate in PAP Compartment -->d
+<species metaid="meta_M_lac__L_pap" sboTerm="SBO:0000247" id="M_lac__L_pap" name="(S)-Lactate" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C3H5O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_lac__L_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/lac__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29708"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00186"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:11065"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:12411"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:L-LACTATE"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM179"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00159"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--10. Metabolite for lactate in syn Compartment -->d
+<species metaid="meta_M_lac__L_syn" sboTerm="SBO:0000247" id="M_lac__L_syn" name="(S)-Lactate" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C3H5O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_lac__L_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/lac__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29708"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00186"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:11065"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:12411"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:L-LACTATE"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM179"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00159"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--11. Metabolite for lactate in prec Compartment -->d
+<species metaid="meta_M_lac__L_prec" sboTerm="SBO:0000247" id="M_lac__L_prec" name="(S)-Lactate" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C3H5O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_lac__L_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/lac__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29708"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00186"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:11065"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:12411"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:L-LACTATE"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM179"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00159"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--2. Metabolite for glutamate in PAP Compartment -->d
+<species metaid="meta_M_glu__L_pap" sboTerm="SBO:0000247" id="M_glu__L_pap" name="L-Glutamate" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C5H8NO4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_glu__L_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/glu__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-428614"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00025"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00302"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13107"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:Glutamates"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--12. Metabolite for glutamate in syn Compartment -->d
+<species metaid="meta_M_glu__L_syn" sboTerm="SBO:0000247" id="M_glu__L_syn" name="L-Glutamate" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C5H8NO4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_glu__L_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/glu__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-428614"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00025"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00302"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13107"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:Glutamates"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--13. Metabolite for glutamate in prec Compartment -->d
+<species metaid="meta_M_glu__L_prec" sboTerm="SBO:0000247" id="M_glu__L_prec" name="L-Glutamate" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C5H8NO4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_glu__L_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/glu__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-428614"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00025"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00302"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13107"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:Glutamates"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--3. Metabolite for sodium(Na) in PAP Compartment -->d
+<species metaid="meta_M_na1_pap" sboTerm="SBO:0000247" id="M_na1_pap" name="Sodium" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="Na">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_na1_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/na1"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2872443"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01330"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26717"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:NA+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+     </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--14. Metabolite for sodium(Na) in syn Compartment -->d
+<species metaid="meta_M_na1_syn" sboTerm="SBO:0000247" id="M_na1_syn" name="Sodium" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="Na">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_na1_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/na1"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2872443"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01330"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26717"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:NA+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+     </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--15. Metabolite for sodium(Na) in prec Compartment -->d
+<species metaid="meta_M_na1_prec" sboTerm="SBO:0000247" id="M_na1_prec" name="Sodium" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="Na">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_na1_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/na1"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2872443"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01330"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26717"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:NA+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+     </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--16. Metabolite for sodium(Na) in postc Compartment -->d
+<species metaid="meta_M_na1_postc" sboTerm="SBO:0000247" id="M_na1_postc" name="Sodium" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="Na">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_na1_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/na1"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2872443"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01330"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26717"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:NA+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+     </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--4. Metabolite for potassium(K) in PAP Compartment -->d
+<species metaid="meta_M_k_pap" sboTerm="SBO:0000247" id="M_k_pap" name="Potassium" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="K">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_k_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/k"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29804"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00238"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26219"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:29103"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:K+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--17. Metabolite for potassium(K) in syn Compartment -->d
+<species metaid="meta_M_k_syn" sboTerm="SBO:0000247" id="M_k_syn" name="Potassium" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="K">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_k_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/k"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29804"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00238"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26219"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:29103"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:K+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--18. Metabolite for potassium(K) in postc Compartment -->d
+<species metaid="meta_M_k_postc" sboTerm="SBO:0000247" id="M_k_postc" name="Potassium" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="K">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_k_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/k"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29804"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00238"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:26219"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:29103"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:K+"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--5. Metabolite for proton(H) in PAP Compartment -->d
+<species metaid="meta_M_h_pap" sboTerm="SBO:0000247" id="M_h_pap" name="Proton" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="H">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_h_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/h"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1132304"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00080"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10744"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13357"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:PROTON"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM1"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00067"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--19. Metabolite for proton(H) in syn Compartment -->d
+<species metaid="meta_M_h_syn" sboTerm="SBO:0000247" id="M_h_syn" name="Proton" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="H">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_h_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/h"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1132304"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00080"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10744"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13357"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:PROTON"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM1"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00067"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--20. Metabolite for proton(H) in prec Compartment -->d
+<species metaid="meta_M_h_prec" sboTerm="SBO:0000247" id="M_h_prec" name="Proton" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="H">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_h_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/h"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1132304"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00080"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10744"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13357"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:PROTON"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM1"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00067"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--31. Metabolite for proton(H) in postc Compartment -->d
+<species metaid="meta_M_h_postc" sboTerm="SBO:0000247" id="M_h_postc" name="Proton" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="1" fbc:chemicalFormula="H">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_h_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/h"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1132304"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00080"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10744"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13357"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:PROTON"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM1"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00067"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--6. Metabolite for glutamine in PAP Compartment -->d
+<species metaid="meta_M_gln__L_pap" sboTerm="SBO:0000247" id="M_gln__L_pap" name="L-Glutamine" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gln__L_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gln__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113522"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00064"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00303"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13110"/>
+			<rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLN"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM37"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--21. Metabolite for glutamine in syn Compartment -->d
+<species metaid="meta_M_gln__L_syn" sboTerm="SBO:0000247" id="M_gln__L_syn" name="L-Glutamine" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gln__L_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gln__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113522"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00064"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00303"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13110"/>
+			<rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLN"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM37"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--22. Metabolite for glutamine in prec Compartment -->d
+<species metaid="meta_M_gln__L_prec" sboTerm="SBO:0000247" id="M_gln__L_prec" name="L-Glutamine" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gln__L_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+		    <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gln__L"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113522"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00064"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00303"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13110"/>
+			<rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLN"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM37"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--7. Metabolite for L-Serine in PAP Compartment -->d
+<species metaid="meta_M_ser__L_pap" sboTerm="SBO:0000247" id="M_ser__L_pap" name="L-Serine" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_ser__L_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/ser__D"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00740"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13019"/>
+			<rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00550"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--23. Metabolite for L-Serine in syn Compartment -->d
+<species metaid="meta_M_ser__L_syn" sboTerm="SBO:0000247" id="M_ser__L_syn" name="L-Serine" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_ser__L_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/ser__D"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00740"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13019"/>
+			<rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00550"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--24. Metabolite for L-Serine in prec Compartment -->d
+<species metaid="meta_M_ser__L_prec" sboTerm="SBO:0000247" id="M_ser__L_prec" name="L-Serine" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_ser__L_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/ser__D"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00740"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:13019"/>
+			<rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00550"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--8. Metabolite for Glycine in PAP Compartment -->d
+<species metaid="meta_M_gly_pap" sboTerm="SBO:0000247" id="M_gly_pap" name="Glycine" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C2H5NO2">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gly_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113545"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00037"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10792"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLY"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM29"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00033"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--25. Metabolite for Glycine in syn Compartment -->d
+<species metaid="meta_M_gly_syn" sboTerm="SBO:0000247" id="M_gly_syn" name="Glycine" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C2H5NO2">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gly_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113545"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00037"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10792"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLY"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM29"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00033"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--26. Metabolite for Glycine in prec Compartment -->d
+<species metaid="meta_M_gly_prec" sboTerm="SBO:0000247" id="M_gly_prec" name="Glycine" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C2H5NO2">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_gly_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/gly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-113545"/>
+		    <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00037"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10792"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:GLY"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM29"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00033"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+
+<!--9. Metabolite for Cysteinylglycine in PAP Compartment -->d
+<species metaid="meta_M_cgly_pap" sboTerm="SBO:0000247" id="M_cgly_pap" name="L-Cysteinylglycine" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3S">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_cgly_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/cgly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1247904"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01419"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:4047"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM683"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd01017"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--27. Metabolite for Cysteinylglycine in syn Compartment -->d
+<species metaid="meta_M_cgly_syn" sboTerm="SBO:0000247" id="M_cgly_syn" name="L-Cysteinylglycine" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3S">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_cgly_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/cgly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1247904"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01419"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:4047"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM683"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd01017"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--28. Metabolite for Cysteinylglycine in prec Compartment -->d
+<species metaid="meta_M_cgly_prec" sboTerm="SBO:0000247" id="M_cgly_prec" name="L-Cysteinylglycine" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="0" fbc:chemicalFormula="C5H10N2O3S">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_cgly_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/cgly"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-1247904"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01419"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:4047"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM683"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd01017"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+
+<!--29. Metabolite for Calcium in syn Compartment -->d
+<species metaid="meta_M_ca2_syn" sboTerm="SBO:0000247" id="M_ca2_syn" name="Calcium" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="2" fbc:chemicalFormula="Ca">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_ca2_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/ca2"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-111875"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-139827"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00076"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:22988"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00464"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:CA+2"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM128"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00063"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd29674"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--30. Metabolite for Calcium in postc Compartment -->d
+<species metaid="meta_M_ca2_postc" sboTerm="SBO:0000247" id="M_ca2_postc" name="Calcium" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="2" fbc:chemicalFormula="Ca">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_ca2_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/ca2"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-111875"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-139827"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00076"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:22988"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00464"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:CA+2"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM128"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00063"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd29674"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+---- METABOLITES END -----
+
+
+-------- LIPID PEROXIDATION PATHWAY --------
+
+----- For Pre and Post neurons ------
+
+<!--1. Linolenic acid transport from cytoplasm to prec and postc -->d
+<reaction metaid="meta_R_LNLCtprec" sboTerm="SBO:0000185" id="R_LNLCtprec" name="Linolenic transport, prec" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_LNLCtprec">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_lnlc_c" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_lnlc_prec" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+</reaction>
+
+
+<reaction metaid="meta_R_LNLCtpostc" sboTerm="SBO:0000185" id="R_LNLCtpostc" name="Linolenic transport, postc" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_LNLCtpostc">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_lnlc_c" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_lnlc_postc" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+</reaction>
+
+
+<!-- ROS attack on M_lnlc_prec plus o2 to form hydroperoxy-linolelic acid (M_C04717_c) in the model
+     M_C04717_c is our damaged lipid specie -->
+	 
+
+<!--2. Hydroperoxy-linolelic acid (M_C04717_c) transport from cytoplasm to prec and postc -->d
+<reaction metaid="meta_R_C04717tprec" sboTerm="SBO:0000185" id="R_C04717tprec" name="Hdroperoxy-linolelic acid transport, prec" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tprec">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_c" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_prec" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+</reaction>
+
+
+<reaction metaid="meta_R_C04717tpostc" sboTerm="SBO:0000185" id="R_C04717tpostc" name="Hdroperoxy-linolelic acid transport, post" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tpostc">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_c" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_postc" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+</reaction>
+
+
+<!-- Demand Reaction for M_C04717 in prec -->
+<reaction metaid="meta_R_DM_C04717_prec" sboTerm="SBO:0000628" id="R_DM_C04717_prec" name="Demand for  Hdroperoxy-linolelic acid, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_DM_C04717_prec">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_C04717_prec" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+      </reaction>
+
+<!-- Demand Reaction for M_C04717 in postc -->
+<reaction metaid="meta_R_DM_C04717_postc" sboTerm="SBO:0000628" id="R_DM_C04717_postc" name="Demand for Hdroperoxy-linolelic acid, postc" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_DM_C04717_postc">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_C04717_postc" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+      </reaction>
+
+-------------------------------------------------------
+----------------------------------------------------
+<reaction metaid="meta_R_SK_C04717_prec" id="R_SK_C04717_prec" name="Sink for Hdroperoxy-linolelic acid, postc" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub">
+    <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_SK_C04717_prec">
+      </rdf:Description>
+     </rdf:RDF>
+    </annotation>
+    <listOfReactants>
+     <speciesReference species="M_C04717_prec" stoichiometry="1" constant="true" />
+    </listOfReactants>
+   </reaction>
+----------------------------------------------------------
+---------------------------------------------------------------
+
+<!--3. Hydroperoxy-linolelic acid (M_C04717_c) transport from prec and postc to syn. APOE mediated -->d
+<reaction metaid="meta_R_C04717tsyn" sboTerm="SBO:0000185" id="R_C04717tsyn" name="Hdroperoxy-linolelic acid transport-prec, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tsyn">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_prec" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_syn" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+   <fbc:geneProductAssociation>
+     <fbc:geneProductRef fbc:geneProduct="G_11816"/> <!-- ApoE gene -->
+   </fbc:geneProductAssociation>
+</reaction>
+
+
+<reaction metaid="meta_R_C04717tPOsyn" sboTerm="SBO:0000185" id="R_C04717tPOsyn" name="Hdroperoxy-linolelic acid transport-post, syn" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tPOsyn">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_postc" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_syn" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+   <fbc:geneProductAssociation>
+     <fbc:geneProductRef fbc:geneProduct="G_11816"/> <!-- ApoE gene -->
+   </fbc:geneProductAssociation>
+</reaction>
+
+<!-- ApoE NCBI gene -->d
+<fbc:geneProduct metaid="meta_G_11816" sboTerm="SBO:0000243" fbc:id="G_11816" fbc:name="ApoE" fbc:label="G_11816">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_G_11816">
+              <bqbiol:is>
+                <rdf:Bag>
+                  <rdf:li rdf:resource="https://identifiers.org/ncbigene/11816"/>
+                </rdf:Bag>
+              </bqbiol:is>
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+</fbc:geneProduct>
+
+
+<!--4. Hydroperoxy-linolelic acid (M_C04717_c) transport from syn to PAP. APOE mediated -->d
+<reaction metaid="meta_R_C04717tpap" sboTerm="SBO:0000185" id="R_C04717tpap" name="Hdroperoxy-linolelic acid transport, pap" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tpap">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_syn" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_pap" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+   <fbc:geneProductAssociation>
+     <fbc:geneProductRef fbc:geneProduct="G_11816"/> <!-- ApoE gene -->
+   </fbc:geneProductAssociation>
+</reaction>
+
+<!--5. Hydroperoxy-linolelic acid (M_C04717_c) transport from PAP to ast-cytosol. FABP7 mediated -->d
+<reaction metaid="meta_R_C04717tc" sboTerm="SBO:0000185" id="R_C04717tc" name="Hdroperoxy-linolelic acid transport, cytosol" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_C04717tc">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_pap" stoichiometry="1" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717_c" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+   <fbc:geneProductAssociation>
+     <fbc:geneProductRef fbc:geneProduct="G_12140"/> <!-- FABP7 gene -->
+   </fbc:geneProductAssociation>
+</reaction>
+
+
+<!-- The hydroperoxy-linolelic acid (M_C04717_c) needs to be detoxified (GPx4 reduces lipid hydroperoxides using GSH) in the astrocyte
+     cytosol to a useful fatty acid substrate before it enters the mitochondria of the astrocyte to produce Ketone bodies through beta oxidation -->
+
+
+<!--6. Lipid hydroperoxide (M_C04717_c) reduction in astrocyte cytosol -->d
+<reaction metaid="meta_R_LNLCOO_REDUCEc" sboTerm="SBO:0000185" id="R_LNLCOO_REDUCEc" name="Lipid hydroperoxide reduction (GPX-like), astrocyte cytosol" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <notes>
+        <xhtml:body>
+            <xhtml:p>Custom reaction to reduce M_C04717_c into linolenate_oh(M_C04717oh_c) </xhtml:p>
+        </xhtml:body>
+   </notes>
+   <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_R_LNLCOO_REDUCEc">
+      </rdf:Description>
+    </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717_c" stoichiometry="1" constant="true"/> 
+     <speciesReference species="M_gthrd_c" stoichiometry="2" constant="true"/> <!-- reduced glutathione -->
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_C04717oh_c" stoichiometry="1" constant="true"/>
+     <speciesReference species="M_gthox_c" stoichiometry="1" constant="true"/> <!-- oxidized glutathione -->
+     <speciesReference species="M_h2o_c" stoichiometry="1" constant="true"/> 
+   </listOfProducts>
+   <fbc:geneProductAssociation>
+    <fbc:or>
+     <fbc:geneProductRef fbc:geneProduct="G_21672"/>
+     <fbc:geneProductRef fbc:geneProduct="G_18477"/>
+     <fbc:geneProductRef fbc:geneProduct="G_14776"/>
+     <fbc:geneProductRef fbc:geneProduct="G_14775"/>
+     <fbc:geneProductRef fbc:geneProduct="G_625249"/>
+    </fbc:or>
+  </fbc:geneProductAssociation>
+</reaction>
+
+<!-- Metabolite for LNCL hydroperoxide in cytosol -->d
+<species metaid="meta_M_C04717oh_c" sboTerm="SBO:0000247" id="M_C04717oh_c" name="Linolenic Acid Hydroperoxide" compartment="c" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O3">
+  <notes>
+    <xhtml:body>
+      <xhtml:p> Pseudometabolite for Linolenic Acid Hydroperoxide, cytosol</xhtml:p>
+    </xhtml:body>
+  </notes>
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_C04717oh_c">
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+
+<!--7. Lipid repair abstraction -->d
+<reaction metaid="meta_R_LNLCOH_REPAIRc" sboTerm="SBO:0000185" id="R_LNLCOH_REPAIRc" name="Lipid repair abstraction (returns linoleate, consumes protons), cytosol" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+   <notes>
+        <xhtml:body>
+            <xhtml:p>Custom reaction to repair M_C04717oh_c into linolenate(M_lnlc_c) </xhtml:p>
+        </xhtml:body>
+   </notes>
+   <annotation>
+     <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+       <rdf:Description rdf:about="#meta_R_LNLCOH_REPAIRc">
+       </rdf:Description>
+     </rdf:RDF>
+   </annotation>
+   <listOfReactants>
+     <speciesReference species="M_C04717oh_c" stoichiometry="1" constant="true"/>
+	 <speciesReference species="M_h_c" stoichiometry="2" constant="true"/>
+   </listOfReactants>
+   <listOfProducts>
+     <speciesReference species="M_lnlc_c" stoichiometry="1" constant="true"/>
+     <speciesReference species="M_h2o_c" stoichiometry="1" constant="true"/>
+   </listOfProducts>
+</reaction>
+
+
+----------- METABOLITES START ----------------
+
+<!--1. Metabolite for Linoleate in prec Compartment -->d
+<species metaid="meta_M_lnlc_prec" sboTerm="SBO:0000247" id="M_lnlc_prec" name="Linoleate" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O2">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_lnlc_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/lnlc"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2046044"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01595"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:12272"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:14515"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00673"/>
+            <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01030120"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:LINOLEIC_ACID"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM293"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd01122"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--2. Metabolite for Linoleate in postc Compartment -->d
+<species metaid="meta_M_lnlc_postc" sboTerm="SBO:0000247" id="M_lnlc_postc" name="Linoleate" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O2">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_lnlc_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/lnlc"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-2046044"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01595"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:12272"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:14515"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00673"/>
+            <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01030120"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:LINOLEIC_ACID"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM293"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd01122"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--2. Metabolite for Hydroperoxylinoleic Acid (M_Co4717) in prec Compartment -->d
+<species metaid="meta_M_C04717_prec" sboTerm="SBO:0000247" id="M_C04717_prec" name="13-L-Hydroperoxylinoleic Acid" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_C04717_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/C04717"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM165530"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--2. Metabolite for Hydroperoxylinoleic Acid (M_Co4717) in postc Compartment -->d
+<species metaid="meta_M_C04717_postc" sboTerm="SBO:0000247" id="M_C04717_postc" name="13-L-Hydroperoxylinoleic Acid" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_C04717_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/C04717"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM165530"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--3. Metabolite for Hydroperoxylinoleic Acid (M_Co4717) in syn Compartment -->d
+<species metaid="meta_M_C04717_syn" sboTerm="SBO:0000247" id="M_C04717_syn" name="13-L-Hydroperoxylinoleic Acid" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_C04717_syn">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/C04717"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM165530"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--4. Metabolite for Hydroperoxylinoleic Acid (M_Co4717) in pap Compartment -->d
+<species metaid="meta_M_C04717_pap" sboTerm="SBO:0000247" id="M_C04717_pap" name="13-L-Hydroperoxylinoleic Acid" compartment="pap" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C18H31O4">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_C04717_pap">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/C04717"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM165530"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+
+----------- METABOLITES END ----------------
+
+-------------------Lipid peroxidation ends--------------------------
+
+
+
+-------- KETONE BODY PRODUCTION AND TRANSPORT --------
+
+<!-- 
+
+The model already support:
+
+Fatty acid activation for lnlc
+M_lnlc_c -> M_lnlccoa_c
+
+Carnitine shuttle and mitochondrial import
+M_lnlccoa_c -> M_lnlccoa_m
+
+Beta oxidation
+M_lnlccoa_m -> multiple M_accoa_m
+
+Ketogenesis
+M_accoa_m -> M_acac_m (Acetoacetate) and M_bhb_m ((R)-3-Hydroxybutyrate)
+
+Transport out
+M_acac_m and M_bhb_m -> extracellular 
+
+Added the transport of the ketone bodies to the syn for Pre-synaptic neuron uptake. 
+But have not moved ketone into the neuron mitochondria for energy production.
+-->
+
+
+
+<!-- Ketones transpot from extracellular to syn -->
+
+1. Acetoacetate(M_acac) transpot from extracellular to syn
+<!-- <reaction metaid="meta_R_ACACtsyn" id="R_ACACtsyn" name="Acetoacetate transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub"> -->
+  <!-- <annotation> -->
+    <!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/"> -->
+      <!-- <rdf:Description rdf:about="#meta_R_ACACtsyn"> -->
+      <!-- </rdf:Description> -->
+    <!-- </rdf:RDF> -->
+  <!-- </annotation> -->
+  <!-- <listOfReactants> -->
+    <!-- <speciesReference species="M_acac_e" stoichiometry="1" constant="true"/> -->
+  <!-- </listOfReactants> -->
+  <!-- <listOfProducts> -->
+    <!-- <speciesReference species="M_acac_syn" stoichiometry="1" constant="true"/> -->
+  <!-- </listOfProducts> -->
+<!-- </reaction> -->
+
+2. (R)-3-Hydroxybutyrate (M_bhb) transpot from extracellular to syn
+<!-- <reaction metaid="meta_R_BHBtsyn" id="R_BHBtsyn" name="(R)-3-Hydroxybutanoate transport, syn" reversible="true" fast="false" fbc:lowerFluxBound="cobra_default_lb" fbc:upperFluxBound="cobra_default_ub"> -->
+  <!-- <annotation> -->
+    <!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/"> -->
+      <!-- <rdf:Description rdf:about="#meta_R_BHBtsyn"> -->
+      <!-- </rdf:Description> -->
+    <!-- </rdf:RDF> -->
+  <!-- </annotation> -->
+  <!-- <listOfReactants> -->
+    <!-- <speciesReference species="M_bhb_e" stoichiometry="1" constant="true"/> -->
+  <!-- </listOfReactants> -->
+  <!-- <listOfProducts> -->
+    <!-- <speciesReference species="M_bhb_syn" stoichiometry="1" constant="true"/> -->
+  <!-- </listOfProducts> -->
+<!-- </reaction> -->
+
+
+<!--3. (R)-3-Hydroxybutyrate (M_bhb) transpot from extracellular to prec -->d
+<reaction metaid="meta_R_BHBtprec" id="R_BHBtprec" name="(R)-3-Hydroxybutanoate transport via H+ symport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_BHBtprec">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_bhb_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_e" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_bhb_prec" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_pre" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+
+<!--4. Acetoacetate(M_acac) transpot from extracellular to prec -->d
+<reaction metaid="meta_R_ACACtprec" sboTerm="SBO:0000185" id="R_ACACtprec" name="Acetoacetate transport via proton symport, prec" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_ACACtprec">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_acac_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_e" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_acac_prec" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_prec" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_20501"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20503"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+<!--5. (R)-3-Hydroxybutyrate (M_bhb) transpot from extracellular to postc -->d
+<reaction metaid="meta_R_BHBtpostc" id="R_BHBtpostc" name="(R)-3-Hydroxybutanoate transport via H+ symport, postc" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_BHBtpostc">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_bhb_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_e" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_bhb_postc" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_postc" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+      </reaction>
+
+
+<!--6. Acetoacetate(M_acac) transpot from extracellular to postc -->d
+<reaction metaid="meta_R_ACACtpostc" sboTerm="SBO:0000185" id="R_ACACtpostc" name="Acetoacetate transport via proton symport, postc" reversible="false" fast="false" fbc:lowerFluxBound="cobra_0_bound" fbc:upperFluxBound="cobra_default_ub">
+        <annotation>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+            <rdf:Description rdf:about="#meta_R_ACACtpostc">
+            </rdf:Description>
+          </rdf:RDF>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="M_acac_e" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_e" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="M_acac_postc" stoichiometry="1" constant="true"/>
+          <speciesReference species="M_h_postc" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <fbc:geneProductAssociation>
+          <fbc:or>
+            <fbc:geneProductRef fbc:geneProduct="G_20501"/>
+            <fbc:geneProductRef fbc:geneProduct="G_20503"/>
+          </fbc:or>
+        </fbc:geneProductAssociation>
+      </reaction>
+
+----------- METABOLITES START ----------------
+
+1. Metabolite for Acetoacetate in syn Compartment
+<!-- <species metaid="meta_M_acac_syn" sboTerm="SBO:0000247" id="M_acac_syn" name="Acetoacetate" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H5O3"> -->
+  <!-- <annotation> -->
+    <!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/"> -->
+      <!-- <rdf:Description rdf:about="#meta_M_acac_syn"> -->
+        <!-- <bqbiol:is> -->
+          <!-- <rdf:Bag> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/acac"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29666"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-73909"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00164"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:131367"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00060"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01060003"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/biocyc/META:3-KETOBUTYRATE"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM154"/> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00142"/> -->
+          <!-- </rdf:Bag> -->
+		<!-- </bqbiol:is> -->
+      <!-- </rdf:Description> -->
+    <!-- </rdf:RDF> -->
+  <!-- </annotation> -->
+<!-- </species> -->
+
+2. Metabolite for (R)-3-Hydroxybutyrate in syn Compartment
+<!-- <species metaid="meta_M_bhb_syn" sboTerm="SBO:0000247" id="M_bhb_syn" name="(R)-3-Hydroxybutyrate" compartment="syn" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H7O3"> -->
+  <!-- <annotation> -->
+    <!-- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/"> -->
+      <!-- <rdf:Description rdf:about="#meta_M_bhb_syn"> -->
+        <!-- <bqbiol:is> -->
+          <!-- <rdf:Bag> -->
+            <!-- <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/bhb"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-5696461"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01089"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10983"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00011"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01050243"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/biocyc/META:CPD-335"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM663"/> -->
+			<!-- <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00797"/> -->
+          <!-- </rdf:Bag> -->
+		<!-- </bqbiol:is> -->
+      <!-- </rdf:Description> -->
+    <!-- </rdf:RDF> -->
+  <!-- </annotation> -->
+<!-- </species>	  -->
+
+<!--3. Metabolite for Acetoacetate in prec Compartment -->d
+<species metaid="meta_M_acac_prec" sboTerm="SBO:0000247" id="M_acac_prec" name="Acetoacetate" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H5O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_acac_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/acac"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29666"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-73909"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00164"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:131367"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00060"/>
+            <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01060003"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:3-KETOBUTYRATE"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM154"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00142"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--4. Metabolite for (R)-3-Hydroxybutyrate in prec Compartment -->d
+<species metaid="meta_M_bhb_prec" sboTerm="SBO:0000247" id="M_bhb_prec" name="(R)-3-Hydroxybutyrate" compartment="prec" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H7O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_bhb_prec">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/bhb"/>
+			<rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-5696461"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01089"/>
+			<rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10983"/>
+			<rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00011"/>
+			<rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01050243"/>
+			<rdf:li rdf:resource="https://identifiers.org/biocyc/META:CPD-335"/>
+			<rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM663"/>
+			<rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00797"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>	   
+
+<!--5. Metabolite for Acetoacetate in postc Compartment -->d
+<species metaid="meta_M_acac_postc" sboTerm="SBO:0000247" id="M_acac_postc" name="Acetoacetate" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H5O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_acac_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/acac"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-29666"/>
+            <rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-73909"/>
+            <rdf:li rdf:resource="https://identifiers.org/kegg.compound/C00164"/>
+            <rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:131367"/>
+            <rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00060"/>
+            <rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01060003"/>
+            <rdf:li rdf:resource="https://identifiers.org/biocyc/META:3-KETOBUTYRATE"/>
+            <rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM154"/>
+            <rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00142"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+<!--6. Metabolite for (R)-3-Hydroxybutyrate in postc Compartment -->d
+<species metaid="meta_M_bhb_postc" sboTerm="SBO:0000247" id="M_bhb_postc" name="(R)-3-Hydroxybutyrate" compartment="postc" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false" fbc:charge="-1" fbc:chemicalFormula="C4H7O3">
+  <annotation>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" xmlns:vCard4="http://www.w3.org/2006/vcard/ns#" xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+      <rdf:Description rdf:about="#meta_M_bhb_postc">
+        <bqbiol:is>
+          <rdf:Bag>
+            <rdf:li rdf:resource="https://identifiers.org/bigg.metabolite/bhb"/>
+			<rdf:li rdf:resource="https://identifiers.org/reactome/R-ALL-5696461"/>
+			<rdf:li rdf:resource="https://identifiers.org/kegg.compound/C01089"/>
+			<rdf:li rdf:resource="https://identifiers.org/chebi/CHEBI:10983"/>
+			<rdf:li rdf:resource="https://identifiers.org/hmdb/HMDB00011"/>
+			<rdf:li rdf:resource="https://identifiers.org/lipidmaps/LMFA01050243"/>
+			<rdf:li rdf:resource="https://identifiers.org/biocyc/META:CPD-335"/>
+			<rdf:li rdf:resource="https://identifiers.org/metanetx.chemical/MNXM663"/>
+			<rdf:li rdf:resource="https://identifiers.org/seed.compound/cpd00797"/>
+          </rdf:Bag>
+		</bqbiol:is>
+      </rdf:Description>
+    </rdf:RDF>
+  </annotation>
+</species>
+
+----------- METABOLITES ENDS ----------------
+
+-------- KETONE BODY PRODUCTION AND TRANSPORT END --------
