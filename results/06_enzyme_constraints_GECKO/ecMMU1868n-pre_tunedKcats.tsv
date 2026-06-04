@@ -1,0 +1,7 @@
+rxns	rxnNames	enzymes	oldKcat	newKcat	source
+CEPTE	Ethanolamine phosphotransferase	A0A0A6YXR0	0.0591325	0.591325	brenda
+CLS_hs	Cardiolipin synthase (homo sapiens)	A0A0C3SFZ5	4.1e-06	0.0041	brenda
+DPMVDx	Diphosphomevalonate decarboxylase	Q3UYC1	0.387833333333333	3.87833333333333	brenda
+HMGCOAR_REV	Hydroxymethylglutaryl CoA reductase (reversible)	F2Z470	0.023	2.3	brenda
+PSP_L	Phosphoserine phosphatase (L-serine)	A0A0J9YVH9	0.182	1.82	brenda
+SMO	Squalene monooxygenase	Q3TQK8	0.076	0.76	brenda
