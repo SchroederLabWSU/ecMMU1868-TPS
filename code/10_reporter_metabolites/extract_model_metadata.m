@@ -1,14 +1,12 @@
-%  This extracts the three model metadata files used by the reporter metabolite
-% analysis step. Use ecTPS_build.mat (the full GECKO-merged community
-% model before equal-growth finalisation) — its struct fields are properly
-% oriented and contain the full annotation needed here.
+% This extracts the three model metadata files used by the reporter metabolite
+% analysis step. 
 %
 % Outputs:
 %   model_rxn_meta.csv    (rxn_id, rxn_name, subsystem, grRule, lb, ub)
 %   model_met_meta.csv    (met_id, met_name, formula)
 %   model_S_triplets.csv  (rxn_id, met_id, coefficient)
 %
-% Run once after generating ecTPS_build.mat from step 07. The output files are
+% Run once after generating ecMMU1868-TPS.mat. The output files are
 % already provided in this folder.
 %
 % Input:  ecMMU1868-TPS.mat  (models/06_community_TPS/enzyme_constrained_tps/)
@@ -29,7 +27,7 @@ initCobraToolbox(false);
 changeCobraSolver('gurobi', 'LP');
 
 %% Paths
-here     = pwd;   % run from this folder: cd to code/10_reporter_metabolites first
+here     = pwd;   % run from this folder: cd to code/10_reporter_metabolites 
 repoRoot = fullfile(here, '..', '..');
 
 matFile = fullfile(repoRoot, 'models', '06_community_TPS', ...
@@ -76,4 +74,3 @@ Tst = table(m.rxns(jj), m.mets(ii), vv, ...
 writetable(Tst, fullfile(outDir, 'model_S_triplets.csv'));
 fprintf('Wrote model_S_triplets.csv (%d nonzeros)\n', numel(vv));
 
-fprintf('\n=== Done ===\n');
