@@ -76,6 +76,7 @@ DEFINED_MEDIUM = {
 
 SUBSTRATES = [
     ("glucose", "EX_glc__D_e", 6, 10.0), # All substrates are normalized to glucose uptake of 10 mmol/gDW/h.
+    ("lactate", "EX_lac__L_e", 3, 20.0),
     ("glutamine", "EX_gln__L_e", 5, 12.0),
     ("palmitate", "EX_hdca_e", 16, 3.75),
     ("beta-hydroxybutyrate", "EX_bhb_e", 4, 15.0),
