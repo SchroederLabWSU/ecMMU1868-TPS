@@ -6,7 +6,7 @@ the metabolic network is properly accounted for through
 metabolite secretion and biomass production.
 
 Runs pFBA on both iMM1865 and iMMU1867 and exports results for each model
-into separate sheets in the same Excel workbook. This sohws the
+into separate sheets in the same Excel workbook. This shows the
 before-and-after curation comparison in Table 1.
 
 This script:
@@ -33,8 +33,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 MODELS_DIR = SCRIPT_DIR.parents[1] / "models"
 
 MODELS = {
-    "iMM1865":  MODELS_DIR / "01_starting_model_iMM1865" / "iMM1865.xml",
-    "iMMU1867": MODELS_DIR / "02_curated_iMMU1867"       / "iMMU1867.xml",
+    "iMM1865": MODELS_DIR / "01_starting_model_iMM1865" / "iMM1865.xml",
+    "iMMU1867": MODELS_DIR / "02_curated_iMMU1867" / "iMMU1867.xml",
 }
 
 OUTPUT_XLSX = SCRIPT_DIR.parents[1] / "results" / "03_carbon_balance_checks" / "carbon_balance_results.xlsx"
