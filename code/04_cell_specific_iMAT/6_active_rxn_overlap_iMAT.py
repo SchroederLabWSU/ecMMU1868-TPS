@@ -33,7 +33,7 @@ MODEL_PATHS = {
     "iMMU1867n": MODELS_DIR / "03_cell_specific_iMAT" / "iMMU1867n.xml",
 }
 BIOMASS_RXN_ID = "BIOMASS_reaction"
-FLUX_TOL       = 1e-6 
+FLUX_TOL = 1e-6 
 
 
 def get_active_reactions(model_path, label):
@@ -44,7 +44,7 @@ def get_active_reactions(model_path, label):
     sol = pfba(model)
     active = set(sol.fluxes.index[sol.fluxes.abs() > FLUX_TOL])
     names = {rxn.id: rxn.name for rxn in model.reactions}
-    print(f"  Biomass: {sol.fluxes[BIOMASS_RXN_ID]:.6f} 1/h | active reactions: {len(active)}")
+    print(f"  {label} - Biomass : {sol.fluxes[BIOMASS_RXN_ID]:.6f} 1/h | active reactions: {len(active)}")
     return active, sol.fluxes, names
 
 
@@ -74,7 +74,7 @@ regions = {
 }
 overlap_counts = {k: len(v) for k, v in regions.items()}
 
-print("\n=== Active Reaction Overlap ===")
+print("\n--- Active Reaction Overlap ---")
 for k, v in overlap_counts.items():
     print(f"  {k:<22s}: {v}")
 
@@ -112,7 +112,7 @@ subsets = (
 # Plot and save the Venn diagram.
 fig, ax = plt.subplots(figsize=(9, 6))
 v = venn3_unweighted(subsets=subsets,
-                     set_labels=("iMMU1867", "iMMU1867a", "iMMU1867n"), ax=ax)
+     set_labels=("iMMU1867", "iMMU1867a", "iMMU1867n"), ax=ax)
 for txt in v.set_labels:
     if txt:
         txt.set_fontsize(14)
