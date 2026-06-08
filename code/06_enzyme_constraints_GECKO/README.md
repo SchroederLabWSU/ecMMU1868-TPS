@@ -1,22 +1,5 @@
 # Enzyme Constraints with GECKO 3.0 Protocol
 
-Workflow Summary:
-
-iMMU1868a-pap
-iMMU1868n-pre
-iMMU1868n-post
-        ↓
-GECKO 3.0 protocol
-        ↓
-enzyme-constrained models (ecModels)
-        ↓
-ecMMU1868a-pap
-ecMMU1868n-pre
-ecMMU1868n-post
-        ↓
-SteadyCom community assembly (next step)
-
-
 The three tripartite cell models (iMMU1868a-pap, iMMU1868n-pre, and iMMU1868n-post) were converted into enzyme-constrained models using the GECKO 3.0 protocol. The reconstruction followed the GECKO full ecModel protocol:
 https://github.com/SysBioChalmers/GECKO/blob/main/tutorials/full_ecModel/protocol.m
 
