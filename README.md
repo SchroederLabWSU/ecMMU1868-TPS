@@ -8,7 +8,7 @@ This workflow is based on two primary datasets:
 
    Khodaee S, Asgari Y, Totonchi M, Karimi-Jafari MH, et al. iMM1865: A New Reconstruction of Mouse Genome-Scale Metabolic Model. Scientific Reports. 2020;10(1). [doi: 10.1038/s41598-020-63235-w](https://doi.org/10.1038/s41598-020-63235-w).
 
-3. Sharma et al. (2015) cell-type-resolved mouse brain proteomics dataset, which was used for astrocyte and neuron-specific model reconstruction and enzyme-constrained model reconstruction.
+2. Sharma et al. (2015) cell-type-resolved mouse brain proteomics dataset, which was used for astrocyte and neuron-specific model reconstruction and enzyme-constrained model reconstruction.
 
    Sharma K, Schmitt S, Bergner CG, Tyanova S, Kannaiyan N, Manrique-Hoyos N, et al. Cell type- and brain region-resolved mouse brain proteome. Nature Neuroscience. 2015;18(12). [doi: 10.1038/nn.4160](https://doi.org/10.1038/nn.4160).
 
