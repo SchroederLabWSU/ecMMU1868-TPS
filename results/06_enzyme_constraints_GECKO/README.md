@@ -8,4 +8,4 @@ Files:
 3. ecMMU1868n-post.yml: enzyme-constrained postsynaptic neuron model.
 4. ecMMU1868x_tunedKcats.tsv: the kcat values adjusted during sensitivity tuning for each model.
 
-The .yml GECKO format and can be loaded with loadEcModel in RAVEN/GECKO and converted to a MATLAB structure. The full .mat versions used by the downstream SteadyCom community step are regenerated from these .yml files or archived on Zenodo because they exceed the GitHub file-size limit.
+The .yml GECKO format and can be loaded with loadEcModel in RAVEN/GECKO and converted to a MATLAB structure. The full .mat versions used by the downstream SteadyCom community step are regenerated from these .yml files or archived on Zenodo (https://doi.org/10.5281/zenodo.20606464) because they exceed the GitHub file-size limit.

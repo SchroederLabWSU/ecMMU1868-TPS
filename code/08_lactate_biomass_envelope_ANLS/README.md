@@ -17,4 +17,3 @@ Outputs: Results go to results/08_lactate_biomass_envelope_ANLS:
 1. biomass_lactate_iMMU1868-TPS.xlsx - stoichiometric envelope data.
 2. biomass_lactate_ecMMU1868-TPS.xlsx - enzyme-constrained envelope data.
 
-Note that the community .mat models exceed the GitHub 100 MB file-size limit and are not stored in this repository. Download them from Zenodo or regenerate them using the scripts in 07_steadyCom_community folder.
