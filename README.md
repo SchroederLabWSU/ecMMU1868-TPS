@@ -1,11 +1,22 @@
 # ecMMU1868-TPS
 Enzyme-constrained metabolic model of the tripartite synapse for Mus musculus. Used to computationally investigate drivers of the Astrocyte-Neuron Lactate Shuttle, and metabolic changes associated with FABP7 knockout. Include all models and model types leading up to the final ecMMU1868-TPS model, along with all necessary code to repeat analysis. 
 
+### Primary Data Sources
+This workflow is based on two primary datasets:
+
+1. Khodaee et al. (2020) iMM1865 mouse genome-scale metabolic model, which served as the starting metabolic reconstruction for all model reconstruction stages.
+
+   Khodaee S, Asgari Y, Totonchi M, Karimi-Jafari MH, et al. iMM1865: A New Reconstruction of Mouse Genome-Scale Metabolic Model. Scientific Reports. 2020;10(1). [doi: 10.1038/s41598-020-63235-w](https://doi.org/10.1038/s41598-020-63235-w).
+
+3. Sharma et al. (2015) cell-type-resolved mouse brain proteomics dataset, which was used for astrocyte and neuron-specific model reconstruction and enzyme-constrained model reconstruction.
+
+   Sharma K, Schmitt S, Bergner CG, Tyanova S, Kannaiyan N, Manrique-Hoyos N, et al. Cell type- and brain region-resolved mouse brain proteome. Nature Neuroscience. 2015;18(12). [doi: 10.1038/nn.4160](https://doi.org/10.1038/nn.4160).
+
 ### Repository structure
 The code folder contains all analysis scripts organized by the pipeline stages (01 to 10). The models folder contains all model files generated throughout the reconstruction workflow, including GSMMs, enzyme-constrained models (ecModels), and community models. The results folder contains output files from each analysis stage. The data folder contains the designed minimal medium used for model simulations, along with processed astrocyte and neuron cell-type-specific proteomics data derived from Sharma et al. (2015)
 
 ### Large Files
-Several model files exceed GitHub's 100 MB per-file limit and are therefore did not stored in this repository. Download them from Zenodo (link) and place them in the locations below before running the corresponding workflow steps.
+Several model files exceed GitHub's 100 MB per-file limit and are therefore did not stored in this repository. Download them from Zenodo ([doi: 10.5281/zenodo.20606463](https://doi.org/10.5281/zenodo.20606464)) and place them in the locations below before running the corresponding workflow steps.
 
 - iMMU1868-TPS.mat (~300 MB):  models/06_community_TPS/stoichiometric_tps/
 - ecTPS_build.mat (~843 MB) and ecMMU1868-TPS.mat (~843 MB):  models/06_community_TPS/enzyme_constrained_tps/
