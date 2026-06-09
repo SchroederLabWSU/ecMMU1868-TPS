@@ -10,15 +10,12 @@ Runs pFBA on each, plots a Venn diagram of their active-reaction overlap, and
 saves all active reactions to Excel.
 
 Outputs (results/04_cell_specific_iMAT/):
-  - active_reaction_overlap.png
   - active_reaction_overlap.xlsx
 """
 
 from pathlib import Path
 import cobra
 from cobra.flux_analysis import pfba
-import matplotlib.pyplot as plt
-from matplotlib_venn import venn3_unweighted
 import pandas as pd
 
 
@@ -96,32 +93,3 @@ with pd.ExcelWriter(excel_path, engine="openpyxl") as writer:
         }).to_excel(writer, sheet_name=region[:31], index=False)
 
 print(f"\nExcel workbook saved: {excel_path}")
-
-# Venn diagram
-# venn3 subset order: (A_only, B_only, AB, C_only, AC, BC, ABC)
-subsets = (
-    overlap_counts["iMMU1867_only"],
-    overlap_counts["iMMU1867a_only"],
-    overlap_counts["iMMU1867_iMMU1867a"],
-    overlap_counts["iMMU1867n_only"],
-    overlap_counts["iMMU1867_iMMU1867n"],
-    overlap_counts["iMMU1867a_iMMU1867n"],
-    overlap_counts["All_three"],
-)
-
-# Plot and save the Venn diagram.
-fig, ax = plt.subplots(figsize=(9, 6))
-v = venn3_unweighted(subsets=subsets,
-     set_labels=("iMMU1867", "iMMU1867a", "iMMU1867n"), ax=ax)
-for txt in v.set_labels:
-    if txt:
-        txt.set_fontsize(14)
-for txt in v.subset_labels:
-    if txt:
-        txt.set_fontsize(12)
-ax.set_title("Active Reaction Overlap (pFBA)", fontsize=14, pad=16)
-
-fig_path = RESULTS_DIR / "active_reaction_overlap.png"
-plt.tight_layout()
-plt.savefig(fig_path, dpi=150, bbox_inches="tight")
-print(f"Venn diagram saved:  {fig_path}")
