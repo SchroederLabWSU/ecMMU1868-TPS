@@ -190,7 +190,7 @@ ko_fluxes = pd.read_csv(KO).rename(columns={"flux": "flux_ko"})
 flux_table = wt_fluxes.merge(ko_fluxes, on="rxn_id", how="inner")
 
 # Reaction-level flux change metrics for reporter scoring
-flux_table["abs_change"]    = (flux_table["flux_wt"] - flux_table["flux_ko"]).abs()
+flux_table["abs_change"] = (flux_table["flux_wt"] - flux_table["flux_ko"]).abs()
 flux_table["signed_change"] = flux_table["flux_wt"].abs() - flux_table["flux_ko"].abs()
 
 # Standardise abs_change to z-scores across all reactions
@@ -256,31 +256,30 @@ results.sort_values("abs_reporter_z", ascending=False, inplace=True)
 lipid_results = results[results["lipid_flag"]].copy()
 lipid_results[["Cell Type", "Compartment"]] = lipid_results["met_id"].apply(lambda m: pd.Series(parse_cell_type_and_compartment(m)))
 lipid_results = lipid_results.rename(columns={"met_name": "Metabolite Name", "n_rxns": "Connected Reactions",
-         "direction": "Direction", "reporter_z": "Reporter score"})
+         "direction": "Direction", "reporter_z": "Reporter score", "signed_delta": "Signed flux change"})
 lipid_results["Direction"] = lipid_results["Direction"].str.capitalize()
 
-print(f"  lipid metabolites: {len(lipid_results)}", flush=True)
+lipid_results = lipid_results[lipid_results["Signed flux change"].abs() > 1e-6].copy()
+print(f"  lipid metabolites: {len(lipid_results)} (after removing near-zero signed delta)", flush=True)
 
 # Per-compartment view
 full_per_comp = (lipid_results.sort_values("abs_reporter_z", ascending=False).reset_index(drop=True)
          .assign(**{"#": lambda d: range(1, len(d)+1)})
-        [["#","Metabolite Name","Cell Type","Compartment","Reporter score","Connected Reactions","Direction"]])
+        [["#","Metabolite Name","Cell Type","Compartment","Reporter score","Signed flux change","Connected Reactions","Direction"]])
 
 # Collapse compartments, retaining the highest absolute reporter score for each metabolite within each cell type.
 per_cell_type = (lipid_results.sort_values("abs_reporter_z", ascending=False)
          .drop_duplicates(subset=["Metabolite Name","Cell Type"], keep="first")
          .reset_index(drop=True))
 per_cell_type["#"] = range(1, len(per_cell_type)+1)
-per_cell_type = per_cell_type[["#","Metabolite Name","Cell Type","Compartment","Reporter score","Connected Reactions","Direction"]]
+per_cell_type = per_cell_type[["#","Metabolite Name","Cell Type","Compartment","Reporter score","Signed flux change","Connected Reactions","Direction"]]
 
-# Top 5% most extreme reporter scores (per cell type), directional only (Suppressed or Induced).
-n_top = max(1, int(round(0.05 * len(per_cell_type))))
-top5 = per_cell_type.head(n_top).copy()
-top5_dir= top5[top5["Direction"].isin(["Suppressed","Induced"])].reset_index(drop=True)
-top5_dir["#"] = range(1, len(top5_dir)+1)
+# Top 10% most extreme reporter scores (per cell type).
+n_top = max(1, int(round(0.10 * len(per_cell_type))))
+top10 = per_cell_type.head(n_top).copy()
 
-print(f"  top 5% (per cell type): {len(top5)}  directional: {len(top5_dir)}", flush=True)
-print("  Direction breakdown:", top5["Direction"].value_counts().to_dict(), flush=True)
+print(f"  top 10% (per cell type): {len(top10)}", flush=True)
+print("  Direction breakdown:", top10["Direction"].value_counts().to_dict(), flush=True)
 
 
 # Excel export
@@ -291,7 +290,7 @@ BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
 CENTER = Alignment(horizontal="center", vertical="center", wrap_text=True)
 LEFT = Alignment(horizontal="left", vertical="center", wrap_text=True)
 COL_WIDTHS = {"#": 5, "Metabolite Name": 44, "Cell Type": 20, "Compartment": 24,
-               "Reporter score": 16, "Connected Reactions": 18, "Direction": 13}
+               "Reporter score": 16, "Signed flux change": 14, "Connected Reactions": 18, "Direction": 13}
 
 
 def add_sheet(wb, name, df):
@@ -306,6 +305,7 @@ def add_sheet(wb, name, df):
             c.font = BODY_FONT; c.border = BORDER
             h = cols[j-1]
             if h == "Reporter score": c.number_format = "+0.000;-0.000;0.000"; c.alignment = CENTER
+            elif h == "Signed flux change": c.number_format = "+0.0000;-0.0000;0.0000"; c.alignment = CENTER
             elif h in ("#","Connected Reactions","Cell Type","Compartment","Direction"): c.alignment = CENTER
             else: c.alignment = LEFT
     for j, h in enumerate(cols, 1):
@@ -328,8 +328,7 @@ def add_notes(wb):
         ("           Induced = higher summed reaction flux in FABP7 KO than WT.", False),
         ("", False),
         ("Sheets:", True),
-        ("  Top5pct_directional - Top 5% lipid rows (suppressed or induced only).", False),
-        ("  Top5pct_all - Top 5% lipid rows (all directions).", False),
+        ("  Top10pct - Top 10% lipid rows by absolute reporter score.", False),
         ("  All_per_cell_type - All lipid rows, compartment-collapsed to highest |reporter score| per cell type.", False),
         ("  All_per_compartment - All lipid rows, one row per cell type × compartment (no collapsing).", False),
     ]
@@ -342,8 +341,7 @@ def add_notes(wb):
 REPORTER_RESULTS.mkdir(parents=True, exist_ok=True)
 wb = Workbook(); wb.remove(wb.active)
 add_notes(wb)
-add_sheet(wb, "Top5pct_directional", top5_dir)
-add_sheet(wb, "Top5pct_all", top5)
+add_sheet(wb, "Top10pct", top10)
 add_sheet(wb, "All_per_cell_type", per_cell_type)
 add_sheet(wb, "All_per_compartment", full_per_comp)
 wb.save(OUTPUT_XLSX)
