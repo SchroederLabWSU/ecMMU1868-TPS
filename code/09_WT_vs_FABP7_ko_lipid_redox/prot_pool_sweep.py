@@ -6,12 +6,7 @@ The community growth is evaluated across prot_pool_exchange lower bounds
 from -1000 to -0.001 mmol/gDW/h. This was used to select the
 final bound of -10 mmol/gDW/h.
 
-The sweep uses ecTPS_build.mat (the reconstructed community model before
-equal-growth coupling and final constraints are applied), allowing the
-protein-pool bound to be varied freely before the construction of the final
-ecMMU1868-TPS model.
-
-Input:  ecTPS_build.mat  (in models/06_community_TPS/enzyme_constrained_tps/)
+Input:  ecMMU1868-TPS.mat  (in models/06_community_TPS/enzyme_constrained_tps/)
 Output: results/09_WT_vs_FABP7_ko_lipid_redox4/prot_pool_sweep.xlsx
 """
 
@@ -27,7 +22,7 @@ OUTPUT_XLSX = RESULTS / "prot_pool_sweep.xlsx"
 sys.path.insert(0, str(SCRIPT_DIR))
 from mat73_to_cobra import load_mat73_cobra
 
-MAT_MODEL = REPO_ROOT / "models" / "06_community_TPS" / "enzyme_constrained_tps" / "ecTPS_build.mat"
+MAT_MODEL = REPO_ROOT / "models" / "06_community_TPS" / "enzyme_constrained_tps" / "ecMMU1868-TPS.mat"
 
 BIOMASS_ID = "AST_BIOMASS_reaction"
 PROT_RXNS = ["AST_prot_pool_exchange", "PRE_prot_pool_exchange", "POST_prot_pool_exchange"]
