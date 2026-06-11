@@ -6,7 +6,7 @@ and maximum feasible lactate secretion rates across the full range of
 community growth rates. This is the stoichiometric (no enzyme constraints) version of the analysis.
 
 Equal-growth coupling (v_AST = v_PRE = v_POST) is added here because it is
-not already baked into iMMU1868-TPS.mat.
+not already included in iMMU1868-TPS.mat.
 
 You need to copy the .mat model from Zenodo to run this locally,
 since the model file is too large for GitHub. Or run Tripartite_Model_SteadyCom.m

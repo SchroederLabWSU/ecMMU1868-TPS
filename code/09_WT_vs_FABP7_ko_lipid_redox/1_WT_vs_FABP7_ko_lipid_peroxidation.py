@@ -99,7 +99,7 @@ if LIPID_REPAIR in rxn_set:
 
 all_rxn_ids = [r.id for r in m.reactions]
 wt_df = pd.DataFrame({"rxn_id": all_rxn_ids,
-                       "flux":   [wt_solution.fluxes.get(rid) for rid in all_rxn_ids]})
+         "flux":   [wt_solution.fluxes.get(rid) for rid in all_rxn_ids]})
 
 # FABP7 KO simulation: block FABP7-associated reactions and re-optimize
 print("\nRunning FABP7 KO .....", flush=True)
