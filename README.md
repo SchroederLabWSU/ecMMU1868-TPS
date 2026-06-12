@@ -16,7 +16,7 @@ This workflow is based on two primary datasets:
 The code folder contains all analysis scripts organized by the pipeline stages (01 to 10). The models folder contains all model files generated throughout the reconstruction workflow, including GSMMs, enzyme-constrained models (ecModels), and community models. The results folder contains output files from each analysis stage. The data folder contains the designed minimal medium used for model simulations, along with processed astrocyte and neuron cell-type-specific proteomics data derived from Sharma et al. (2015).
 
 ### Large Files
-Several model files exceed GitHub's 100 MB per-file limit and are therefore did not stored in this repository. Download them from Zenodo ([doi: 10.5281/zenodo.20606463](https://doi.org/10.5281/zenodo.20606464)) and place them in the locations below before running the corresponding workflow steps.
+Several model files exceed GitHub's 100 MB per-file limit and are therefore did not stored in this repository. Download them from Zenodo ([doi: 10.5281/zenodo.20606463](https://doi.org/10.5281/zenodo.20650927)) and place them in the locations below before running the corresponding workflow steps.
 
 - iMMU1868-TPS.mat (~300 MB):  models/06_community_TPS/stoichiometric_tps/.
 - ecTPS_build.mat (~843 MB) and ecMMU1868-TPS.mat (~843 MB):  models/06_community_TPS/enzyme_constrained_tps/.
