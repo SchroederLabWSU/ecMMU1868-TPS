@@ -1,8 +1,8 @@
 ---
 !!omap
 - metaData:
-    id: "ecMMU1868n-post"
-    name: "Enzyme-constrained post-synaptic neuron"
+    id: "iMM1865_neuron_post"
+    name: "Mus musculus"
     date: "2026-04-22"
     geckoLight: "false"
 - metabolites:

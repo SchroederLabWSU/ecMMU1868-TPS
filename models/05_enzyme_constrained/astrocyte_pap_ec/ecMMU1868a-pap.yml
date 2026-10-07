@@ -1,8 +1,8 @@
 ---
 !!omap
 - metaData:
-    id: "ecMMU1868a-pap"
-    name: "Enzyme-constrained astrocyte with PAP"
+    id: "iMM1865_astrocyte"
+    name: "Mus musculus"
     date: "2026-04-21"
     geckoLight: "false"
 - metabolites:

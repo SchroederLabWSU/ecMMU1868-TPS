@@ -1,8 +1,8 @@
 ---
 !!omap
 - metaData:
-    id: "ecMMU1868n-pre"
-    name: "Enzyme-constrained pre-synaptic neuron"
+    id: "iMM1865_neuron_pre"
+    name: "Mus musculus"
     date: "2026-04-21"
     geckoLight: "false"
 - metabolites:
