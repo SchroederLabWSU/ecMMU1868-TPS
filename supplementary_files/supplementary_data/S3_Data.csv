@@ -1,0 +1,15 @@
+Reaction,Enzyme,kcat original per s,kcat tuned per s,Source,Fold change
+CEPTE,A0A0A6YXR0,0.05913,0.5913,BRENDA,10
+CLS_hs,A0A0C3SFZ5,4.1e-06,0.0041,BRENDA,1000
+DPMVDx,Q3UYC1,0.3878,3.878,BRENDA,10
+GRTT,A0A1Y7VJZ1,0.1173,1.173,DLKcat,10
+HMGCOARx,F2Z470,0.023,2.3,BRENDA,100
+SQLEr,Q3TQK8,0.076,0.76,BRENDA,10
+,,,,,
+,,,,,
+Notes,,,,,
+Procedure,"GECKO sensitivityTuning, standard workflow",,,,
+Iterations to convergence,9,,,,
+kcat assignments altered,6,,,,
+Total kcat assignments,18646,,,,
+Percent altered,0.03%,,,,
