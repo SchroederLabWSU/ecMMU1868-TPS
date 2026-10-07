@@ -1,6 +1,6 @@
 % ============================================================================
 % SteadyCom script for combining the three expanded stoichiometric cell models
-% (iMMU1868a-pap, iMMU1868n-pre and iMMU1868n-post) into stoichiometric 
+% (iMMU1868a-pap, iMMU1868n-pre and iMMU1868n-post) into stoichiometric
 % tripartite synapse model (iMMU1868-TPS)
 %
 % The three cell models are merged into a single SteadyCom community model. The
@@ -9,63 +9,61 @@
 % into a shared synaptic pool [q] via reversible transfer reactions, enabling metabolite
 % exchange across the synaptic cleft.
 %
+% Equal-growth coupling, the defined medium and the FBA objective are applied
+% in this same script, so no intermediate build file is written.
+%
 % Output: iMMU1868-TPS.mat
 % ============================================================================
 
 clc; clear;
 
-cd(fileparts(which(mfilename)));
-
 %% Toolbox setup
-% Edit toolbox path
-% COBRA Toolbox : https://opencobra.github.io/cobratoolbox/
-% Gurobi        : https://www.gurobi.com
-COBRA_PATH = 'C:/cobra';                  
+COBRA_PATH  = 'C:/cobra';
 SOLVER_PATH = 'C:/gurobi1202/win64/matlab';
 
 restoredefaultpath; rehash toolboxcache;
+set(0, 'DefaultFigureVisible', 'off');
 addpath(genpath(COBRA_PATH));
 addpath(SOLVER_PATH);
 
 initCobraToolbox(false);
 changeCobraSolver('gurobi', 'LP');
 
-%% 1) Input files (expanded cell-line specific models)
+%% 1) Paths
 scriptDir = fileparts(mfilename('fullpath'));
 if isempty(scriptDir), scriptDir = pwd; end
 
-astro_file = fullfile(scriptDir, 'iMMU1868a-pap.xml');
-preNeuron_file = fullfile(scriptDir, 'iMMU1868n-pre.xml');
-postNeuron_file = fullfile(scriptDir, 'iMMU1868n-post.xml');
+repoRoot = fullfile(scriptDir, '..', '..', '..');
+modelsDir  = fullfile(repoRoot, 'models', '04_tripartite_expanded');
+outDir   = fullfile(repoRoot, 'models', '06_community_TPS', 'stoichiometric_tps');
+if ~exist(outDir, 'dir'), mkdir(outDir); end
 
-outDir = scriptDir;
+astro_file  = fullfile(modelsDir, 'iMMU1868a-pap.xml');
+preNeuron_file  = fullfile(modelsDir, 'iMMU1868n-pre.xml');
+postNeuron_file = fullfile(modelsDir, 'iMMU1868n-post.xml');
+matFile  = fullfile(outDir,  'iMMU1868-TPS.mat');
+for f = {astro_file, preNeuron_file, postNeuron_file}
+    assert(exist(f{1}, 'file') == 2, 'Missing %s', f{1});
+end
 
-%% 2) Load models
+%% 2) Load
 fprintf('Loading models...\n');
-
-AST = readCbModel(astro_file);
-PRE = readCbModel(preNeuron_file);
+AST  = readCbModel(astro_file);
+PRE  = readCbModel(preNeuron_file);
 POST = readCbModel(postNeuron_file);
 
-% Confirm each model loaded as a valid COBRA struct
-assert(isstruct(AST)  && isfield(AST,  'S') && isfield(AST,  'rxns'), ...
-       'Astrocyte model failed to load as COBRA struct');
-assert(isstruct(PRE)  && isfield(PRE,  'S') && isfield(PRE,  'rxns'), ...
-       'Pre-neuron model failed to load as COBRA struct');
-assert(isstruct(POST) && isfield(POST, 'S') && isfield(POST, 'rxns'), ...
-       'Post-neuron model failed to load as COBRA struct');
+fprintf('  Astrocyte : rxns=%d mets=%d genes=%d\n', numel(AST.rxns),  numel(AST.mets),  numel(AST.genes));
+fprintf('  Pre-neuron: rxns=%d mets=%d genes=%d\n', numel(PRE.rxns),  numel(PRE.mets),  numel(PRE.genes));
+fprintf('  Post-neuron:rxns=%d mets=%d genes=%d\n', numel(POST.rxns), numel(POST.mets), numel(POST.genes));
 
-% Check the composition of each loaded model
-fprintf('  Astrocyte (PAP):   rxns=%d, mets=%d, genes=%d, comps=%d\n', ...
-    numel(AST.rxns), numel(AST.mets), numel(AST.genes), numel(AST.comps));
-fprintf('  Pre-neuron:        rxns=%d, mets=%d, genes=%d, comps=%d\n', ...
-    numel(PRE.rxns), numel(PRE.mets), numel(PRE.genes), numel(PRE.comps));
-fprintf('  Post-neuron:       rxns=%d, mets=%d, genes=%d, comps=%d\n', ...
-    numel(POST.rxns), numel(POST.mets), numel(POST.genes), numel(POST.comps));
+% confirm the edits are present before merging
+for r = {'C04717tbulk','C04717tcFABP5','C04717td'}
+    fprintf('  AST has %-16s : %d\n', r{1}, any(strcmp(AST.rxns, r{1})));
+end
+fprintf('  AST has C04717bulk_c   : %d\n', any(strcmp(AST.mets, 'C04717bulk[c]')) || any(strcmp(AST.mets,'C04717bulk_c')));
 
-%% 3) Clean empty cell fields (required by createMultipleSpeciesModel)
-fieldsToClean = {'metFormulas','genes','grRules','metNames','rxnNames', ...
-                 'subSystems','rules','geneNames'};
+%% 3) Clean empty cell fields
+fieldsToClean = {'metFormulas','genes','grRules','metNames','rxnNames','subSystems','rules','geneNames'};
 for f = fieldsToClean
     ff = f{1};
     if isfield(AST,ff),  AST.(ff)(cellfun(@isempty,AST.(ff)))   = {''}; end
@@ -73,341 +71,254 @@ for f = fieldsToClean
     if isfield(POST,ff), POST.(ff)(cellfun(@isempty,POST.(ff))) = {''}; end
 end
 
-%% 4) Build multi-species community model
+%% 4) Build community
 desiredTags = {'AST_'; 'PRE_'; 'POST_'};
-
-biomassNames = cell(3,1);
 modArr = {AST, PRE, POST};
+biomassNames = cell(3,1);
 for k = 1:3
     bIdx = find(contains(modArr{k}.rxns, 'BIOMASS', 'IgnoreCase', true), 1);
-    if ~isempty(bIdx)
-        biomassNames{k} = modArr{k}.rxns{bIdx};
-    else
-        biomassNames{k} = '';
-    end
+    if ~isempty(bIdx), biomassNames{k} = modArr{k}.rxns{bIdx}; else, biomassNames{k} = ''; end
 end
-fprintf('\nBuilding community model with tags: %s, %s, %s\n', ...
-    desiredTags{1}, desiredTags{2}, desiredTags{3});
+fprintf('\nBiomass reactions: %s | %s | %s\n', biomassNames{:});
 
-modelCom = createMultipleSpeciesModel({AST; PRE; POST}, biomassNames, ...
-    'nameTagsModels', desiredTags);
-
+modelCom = createMultipleSpeciesModel({AST; PRE; POST}, biomassNames, 'nameTagsModels', desiredTags);
 modelCom.csense = repmat('E', 1, numel(modelCom.mets));
-
 detectedTags = detectSpeciesPrefixes(modelCom.rxns, 3);
 [modelCom.infoCom, modelCom.indCom] = getMultiSpeciesModelId(modelCom, detectedTags);
+fprintf('Community: rxns=%d mets=%d\n', numel(modelCom.rxns), numel(modelCom.mets));
 
-fprintf('Detected rxn prefixes: %s, %s, %s\n', ...
-    detectedTags{1}, detectedTags{2}, detectedTags{3});
-fprintf('Community: rxns=%d, mets=%d\n', ...
-    numel(modelCom.rxns), numel(modelCom.mets));
-
-%% 5) Remove EX_ "species" if present
-if isfield(modelCom.infoCom, 'spAbbr')
-    keep = ~strcmp(modelCom.infoCom.spAbbr, 'EX_');
-    if any(~keep)
-        modelCom.infoCom.spAbbr = modelCom.infoCom.spAbbr(keep);
-        if isfield(modelCom.infoCom, 'spName')
-            modelCom.infoCom.spName = modelCom.infoCom.spName(keep);
-        end
-        nSp = numel(modelCom.infoCom.spAbbr);
-        if size(modelCom.indCom.EXsp, 2) > nSp
-            modelCom.indCom.EXsp = modelCom.indCom.EXsp(:, 1:nSp);
-        end
-    end
-end
-fprintf('Species count: %d\n', numel(modelCom.infoCom.spAbbr));
-
-%% 6) Rebuild gene fields from individual species models
+modelCom = trimSpuriousEXspecies(modelCom);
 if ~isfield(modelCom,'genes') || isempty(modelCom.genes) || ...
    ~isfield(modelCom,'rxnGeneMat') || size(modelCom.rxnGeneMat,2)==0
     modelCom = restoreGeneFieldsFromSpecies(modelCom, {AST, PRE, POST}, detectedTags);
     fprintf('Rebuilt gene fields: total genes = %d\n', numel(modelCom.genes));
 end
 
-%% 7) Map species exchange bounds into community [u] exchanges
-mapToU  = @(metIDs) strrep(metIDs, '[e]', '[u]');
-getExchMet = @(mod) find(~cellfun('isempty', regexp(mod.mets, '\[e\]')));
+%% 5) Map species exchange bounds into [u]   (ub = 1000 here, not 1e5)
+mapToU = @(x) strrep(x, '[e]', '[u]');
+getExchMet = @(mm) find(~cellfun('isempty', regexp(mm.mets, '\[e\]')));
+metEx_AST = getExchMet(AST);  rxn_AST  = mapE_MetToExRxn(AST,  metEx_AST);
+metEx_PRE = getExchMet(PRE);  rxn_PRE  = mapE_MetToExRxn(PRE,  metEx_PRE);
+metEx_POST= getExchMet(POST); rxn_POST = mapE_MetToExRxn(POST, metEx_POST);
 
-metEx_AST  = getExchMet(AST);  rxn_AST  = mapE_MetToExRxn(AST,  metEx_AST);
-metEx_PRE  = getExchMet(PRE);  rxn_PRE  = mapE_MetToExRxn(PRE,  metEx_PRE);
-metEx_POST = getExchMet(POST);  rxn_POST = mapE_MetToExRxn(POST, metEx_POST);
+lb_AST = nan(numel(metEx_AST),1); lb_PRE = nan(numel(metEx_PRE),1); lb_POST = nan(numel(metEx_POST),1);
+lb_AST(~isnan(rxn_AST))  = AST.lb(rxn_AST(~isnan(rxn_AST)));
+lb_PRE(~isnan(rxn_PRE))  = PRE.lb(rxn_PRE(~isnan(rxn_PRE)));
+lb_POST(~isnan(rxn_POST))= POST.lb(rxn_POST(~isnan(rxn_POST)));
 
-lb_AST = nan(numel(metEx_AST),1);
-lb_PRE = nan(numel(metEx_PRE),1);
-lb_POST = nan(numel(metEx_POST),1);
-
-lb_AST(~isnan(rxn_AST)) = AST.lb(rxn_AST(~isnan(rxn_AST)));
-lb_PRE(~isnan(rxn_PRE)) = PRE.lb(rxn_PRE(~isnan(rxn_PRE)));
-lb_POST(~isnan(rxn_POST)) = POST.lb(rxn_POST(~isnan(rxn_POST)));
-
-[found_AST, idxComMet_AST] = ismember(mapToU(AST.mets(metEx_AST)),   modelCom.infoCom.Mcom);
-[found_PRE, idxComMet_PRE] = ismember(mapToU(PRE.mets(metEx_PRE)),   modelCom.infoCom.Mcom);
-[found_POST, idxComMet_POST] = ismember(mapToU(POST.mets(metEx_POST)), modelCom.infoCom.Mcom);
+[fA,iA_] = ismember(mapToU(AST.mets(metEx_AST)),  modelCom.infoCom.Mcom);
+[fP,iP_] = ismember(mapToU(PRE.mets(metEx_PRE)),  modelCom.infoCom.Mcom);
+[fQ,iQ_] = ismember(mapToU(POST.mets(metEx_POST)),modelCom.infoCom.Mcom);
 
 modelCom.lb(modelCom.indCom.EXcom(:,1)) = 0;
 modelCom.ub(modelCom.indCom.EXcom(:,1)) = 1000;
+for t = find(fA).', j = modelCom.indCom.EXcom(iA_(t),1); modelCom.lb(j) = min(modelCom.lb(j), lb_AST(t)); end
+for t = find(fP).', j = modelCom.indCom.EXcom(iP_(t),1); modelCom.lb(j) = min(modelCom.lb(j), lb_PRE(t)); end
+for t = find(fQ).', j = modelCom.indCom.EXcom(iQ_(t),1); modelCom.lb(j) = min(modelCom.lb(j), lb_POST(t)); end
 
-for t = find(found_AST).'
-    u = idxComMet_AST(t);
-    j = modelCom.indCom.EXcom(u,1);
-    modelCom.lb(j) = min(modelCom.lb(j), lb_AST(t));
-end
-
-for t = find(found_PRE).'
-    u = idxComMet_PRE(t);
-    j = modelCom.indCom.EXcom(u,1);
-    modelCom.lb(j) = min(modelCom.lb(j), lb_PRE(t));
-end
-
-for t = find(found_POST).'
-    u = idxComMet_POST(t);
-    j = modelCom.indCom.EXcom(u,1);
-    modelCom.lb(j) = min(modelCom.lb(j), lb_POST(t));
-end
-
-fprintf('Community exchange bounds mapped from species models.\n');
-
-%% 7b) Refresh infoCom/indCom before adding the shared pool
 [modelCom.infoCom, modelCom.indCom] = getMultiSpeciesModelId(modelCom, detectedTags);
-fprintf('infoCom/indCom refreshed (EXcom: %d, EXsp: %d x %d)\n', ...
-    size(modelCom.indCom.EXcom,1), size(modelCom.indCom.EXsp,1), size(modelCom.indCom.EXsp,2));
+modelCom = trimSpuriousEXspecies(modelCom);
 
-%% 7c) Remove unintended EX_ species
-if isfield(modelCom.infoCom, 'spAbbr')
-    keep = ~strcmp(modelCom.infoCom.spAbbr, 'EX_');
-    if any(~keep)
-        modelCom.infoCom.spAbbr = modelCom.infoCom.spAbbr(keep);
-        if isfield(modelCom.infoCom, 'spName')
-            modelCom.infoCom.spName = modelCom.infoCom.spName(keep);
-        end
-        nSp = numel(modelCom.infoCom.spAbbr);
-        if size(modelCom.indCom.EXsp, 2) > nSp
-            modelCom.indCom.EXsp = modelCom.indCom.EXsp(:, 1:nSp);
-        end
-        fprintf('Removed spurious EX_ species after infoCom refresh.\n');
+%% 6) Shared synaptic cleft pool [q]
+modelCom = addSharedPoolForCompartment(modelCom, detectedTags, 'syn', 'q');
+
+%% 7) Equal-flux biomass coupling
+iA = find(strcmp(modelCom.rxns, 'AST_BIOMASS_reaction'),  1);
+iP = find(strcmp(modelCom.rxns, 'PRE_BIOMASS_reaction'),  1);
+iQ = find(strcmp(modelCom.rxns, 'POST_BIOMASS_reaction'), 1);
+assert(~isempty(iA) && ~isempty(iP) && ~isempty(iQ), 'biomass reactions not found');
+
+nRxn = numel(modelCom.rxns);
+modelCom.S = [modelCom.S; sparse(1,[iA iP],[1 -1],1,nRxn); sparse(1,[iA iQ],[1 -1],1,nRxn)];
+modelCom.b = [modelCom.b; 0; 0];
+if isfield(modelCom,'csense'), modelCom.csense = [modelCom.csense(:); 'E'; 'E']; end
+modelCom.mets = [modelCom.mets; {'couple_AST_PRE'; 'couple_AST_POST'}];
+modelCom = padMetFields(modelCom, 2);
+fprintf('Added equal-flux coupling.\n');
+
+%% 8) Defined minimal medium
+medium = { ...
+  'EX_h2o[u]' -1000 1000; 'EX_h[u]' -1000 1000; 'EX_na1[u]' -1000 1000;
+  'EX_k[u]' -1000 1000;   'EX_cl[u]' -1000 1000; 'EX_ca2[u]' -1000 1000;
+  'EX_nh4[u]' -10 1000;   'EX_pi[u]' -10 1000;   'EX_so4[u]' -10 1000;
+  'EX_o2[u]' -10 1000;    'EX_co2[u]' 0 1000;    'EX_glc__D[u]' -10 1000;
+  'EX_gln__L[u]' 0 1000;  'EX_lac__L[u]' 0 1000; 'EX_hdca[u]' 0 1000;
+  'EX_his__L[u]' -0.186207 1000; 'EX_ile__L[u]' -0.186207 1000;
+  'EX_leu__L[u]' -0.186207 1000; 'EX_lys__L[u]' -0.186207 1000;
+  'EX_met__L[u]' -0.155172 1000; 'EX_phe__L[u]' -0.279310 1000;
+  'EX_thr__L[u]' -0.124138 1000; 'EX_trp__L[u]' -0.034483 1000;
+  'EX_val__L[u]' -0.155172 1000 };
+
+exIdx = find(~cellfun('isempty', regexp(modelCom.rxns, '^EX_.*\[u\]$')));
+modelCom.lb(exIdx) = 0; modelCom.ub(exIdx) = 1000;
+nOpened = 0;
+for i = 1:size(medium,1)
+    j = find(strcmp(modelCom.rxns, medium{i,1}), 1);
+    if ~isempty(j), modelCom.lb(j) = medium{i,2}; modelCom.ub(j) = medium{i,3}; nOpened = nOpened + 1; end
+end
+fprintf('Medium: %d/%d exchanges opened (of %d community EX_*[u]).\n', ...
+    nOpened, size(medium,1), numel(exIdx));
+
+%% 9) Objective
+modelCom.c = zeros(numel(modelCom.rxns),1);
+modelCom.c(iA) = 1;
+modelCom.osenseStr = 'max';
+
+%% 10) VERIFY the FABP-split edits survived the merge
+fprintf('\n=========================================================\n');
+fprintf('VERIFICATION -- FABP-split features in the community model\n');
+fprintf('=========================================================\n');
+checkR = {'AST_C04717tbulk','AST_C04717tcFABP5','AST_C04717td', ...
+          'AST_C04717tc','AST_C04717tpap', ...
+          'PRE_C04717tbulk','POST_C04717tbulk'};
+for k = 1:numel(checkR)
+    j = find(strcmp(modelCom.rxns, checkR{k}), 1);
+    if isempty(j)
+        fprintf('  %-24s MISSING\n', checkR{k});
+    else
+        gpr = '';
+        if isfield(modelCom,'grRules') && numel(modelCom.grRules) >= j, gpr = modelCom.grRules{j}; end
+        fprintf('  %-24s lb=%-7g ub=%-7g GPR="%s"\n', checkR{k}, modelCom.lb(j), modelCom.ub(j), gpr);
     end
 end
-fprintf('Species count after cleanup: %d\n', numel(modelCom.infoCom.spAbbr));
-
-%% 8) Add the shared synaptic cleft pool [q]
-cleftComp = 'syn';   % compartment lable in individual models
-cleftPoolComp = 'q';     % shared pool label for the cleft
-
-modelCom = addSharedPoolForCompartment(modelCom, detectedTags, ...
-    cleftComp, cleftPoolComp);
-
-fprintf('\n Synaptic Cleft Shared Pool Summary\n');
-synPoolMets = modelCom.mets(contains(modelCom.mets, ['[' cleftPoolComp ']']));
-fprintf('Shared pool [%s] metabolites: %d\n', cleftPoolComp, numel(synPoolMets));
-for k = 1:numel(synPoolMets)
-    fprintf('  %s\n', synPoolMets{k});
+for mname = {'AST_C04717bulk[c]','PRE_C04717bulk[c]','POST_C04717bulk[c]'}
+    jm = find(strcmp(modelCom.mets, mname{1}), 1);
+    if isempty(jm)
+        fprintf('  %-24s MISSING\n', mname{1});
+    else
+        fprintf('  %-24s present, in %d reactions\n', mname{1}, nnz(modelCom.S(jm,:)));
+    end
 end
 
-%% 9) Community model summary
-fprintf('\n COMMUNITY MODEL SUMMARY: \n');
-fprintf('Total reactions: %d\n', numel(modelCom.rxns));
-fprintf('Total metabolites: %d\n', numel(modelCom.mets));
-fprintf('Total genes: %d\n', numel(modelCom.genes));
-fprintf('Species: %s\n', strjoin(modelCom.infoCom.spAbbr, ', '));
-fprintf('EXcom (environment exchanges): %d\n', size(modelCom.indCom.EXcom, 1));
-fprintf('EXsp  (species exchanges): %d x %d\n', ...
-    size(modelCom.indCom.EXsp, 1), size(modelCom.indCom.EXsp, 2));
-
-icleft_rxns = modelCom.rxns(startsWith(modelCom.rxns, 'ICLEFT_'));
-fprintf('Synaptic coupling transfers:   %d\n', numel(icleft_rxns));
-
-%% 10) Save community model
-matFile = fullfile(outDir, 'iMMU1868-TPS.mat');
-if exist(matFile, 'file')
-    fileattrib(matFile, '+w', 'a');
-    delete(matFile);
-end
+%% 11) Save then verify
+if exist(matFile,'file'), fileattrib(matFile,'+w','a'); delete(matFile); end
 save(matFile, 'modelCom', '-v7.3');
-fprintf('\nSaved community model: %s\n', matFile);
+fprintf('\nSaved %s\n', matFile);
 
-%% Local Functions
-% Required by the script to run properly. 
+fprintf('\nOptimising ...\n');
+sol = optimizeCbModel(modelCom, 'max');
+fprintf('  status = %d\n', sol.stat);
+fprintf('  mu_max = %.6f 1/h   (published stoichiometric: 0.104826)\n', sol.f);
+fprintf('  AST_BM = %.6f\n  PRE_BM = %.6f\n  POST_BM = %.6f\n', sol.x(iA), sol.x(iP), sol.x(iQ));
+fprintf('\nCommunity: rxns=%d mets=%d genes=%d\n', ...
+    numel(modelCom.rxns), numel(modelCom.mets), numel(modelCom.genes));
+
+
+%% ===================== local functions =====================
+function modelCom = trimSpuriousEXspecies(modelCom)
+    if ~isfield(modelCom,'infoCom') || ~isfield(modelCom.infoCom,'spAbbr'), return; end
+    keep = ~strcmp(modelCom.infoCom.spAbbr,'EX_');
+    if any(~keep)
+        modelCom.infoCom.spAbbr = modelCom.infoCom.spAbbr(keep);
+        if isfield(modelCom.infoCom,'spName'), modelCom.infoCom.spName = modelCom.infoCom.spName(keep); end
+        nSp = numel(modelCom.infoCom.spAbbr);
+        if size(modelCom.indCom.EXsp,2) > nSp, modelCom.indCom.EXsp = modelCom.indCom.EXsp(:,1:nSp); end
+    end
+end
 
 function rxnIdx = mapE_MetToExRxn(model, extracellularMets)
-% For each extracellular metabolite, find its exchange reaction (NaN if none).
-    singleMetRxns = find(sum(model.S ~= 0, 1) == 1);   % reactions with one metabolite
-
+    singleMetRxns = find(sum(model.S ~= 0, 1) == 1);
     [metRows, ~] = find(model.S(:, singleMetRxns));
     isExtracellular = false(size(singleMetRxns));
     for col = 1:numel(singleMetRxns)
-        metRow  = metRows(col);
-        compTok = regexp(model.mets{metRow}, '\[(.)\]', 'tokens', 'once');
-        isExtracellular(col) = ~isempty(compTok) && strcmp(compTok{1}, 'e');
+        compTok = regexp(model.mets{metRows(col)}, '\[(.)\]', 'tokens', 'once');
+        isExtracellular(col) = ~isempty(compTok) && strcmp(compTok{1},'e');
     end
     extracellularExRxns = singleMetRxns(isExtracellular);
-
-    rxnIdx = nan(numel(extracellularMets), 1);
+    rxnIdx = nan(numel(extracellularMets),1);
     for mi = 1:numel(extracellularMets)
-        metRow    = extracellularMets(mi);
-        matchCols = find(model.S(metRow, extracellularExRxns) ~= 0);
-        if numel(matchCols) == 1
-            rxnIdx(mi) = extracellularExRxns(matchCols);
-        end
+        matchCols = find(model.S(extracellularMets(mi), extracellularExRxns) ~= 0);
+        if numel(matchCols) == 1, rxnIdx(mi) = extracellularExRxns(matchCols); end
     end
 end
 
-
 function tags = detectSpeciesPrefixes(rxnIDs, nSpecies)
-% Extract the species prefixes COBRA assigned (e.g. AST_, PRE_, POST_).
     prefixTokens = regexp(rxnIDs, '^([A-Za-z0-9]+_)', 'tokens', 'once');
     prefixes = prefixTokens(~cellfun(@isempty, prefixTokens));
     prefixes = cellfun(@(tk) tk{1}, prefixes, 'UniformOutput', false);
     [~, firstIdx] = unique(prefixes, 'stable');
     prefixes = prefixes(sort(firstIdx));
-
     if isempty(prefixes) || numel(prefixes) < nSpecies
-        prefixes = arrayfun(@(idx) sprintf('model%d_', idx), 1:nSpecies, ...
-            'UniformOutput', false);
+        prefixes = arrayfun(@(i) sprintf('model%d_',i), 1:nSpecies, 'UniformOutput', false);
     end
     tags = prefixes(:);
 end
 
-
 function modelCom = addSharedPoolForCompartment(modelCom, tags, compFrom, compPool)
-% Create a shared metabolite pool [compPool] for an inter-cellular
-% compartment [compFrom], linking each species' metabolites to the pool
-% via a reversible coupling transfer (e.g. AST_met[syn] <-> met[q]).
     fromPattern = ['\[', compFrom, '\]'];
-    poolBracket = ['[', compPool, ']'];
-
     addedPoolMets = containers.Map;
-
     for si = 1:numel(tags)
         tag = tags{si};
-
         speciesMetIdx = find(startsWith(modelCom.mets, tag) & ...
                         ~cellfun('isempty', regexp(modelCom.mets, fromPattern)));
-
         for mi = 1:numel(speciesMetIdx)
             speciesMet = modelCom.mets{speciesMetIdx(mi)};
-
-            metNoTag = erase(speciesMet, tag);
-            poolMet  = regexprep(metNoTag, fromPattern, poolBracket);
-
+            poolMet = regexprep(erase(speciesMet, tag), fromPattern, ['[', compPool, ']']);
             if ~isKey(addedPoolMets, poolMet)
                 addedPoolMets(poolMet) = 1;
-
-                if findMetIDs(modelCom, poolMet) == 0
-                    modelCom = addMetabolite(modelCom, poolMet);
-                end
-
-                exRxn = ['EXC_', regexprep(poolMet, ['\[', compPool, '\]'], ''), ...
-                         '[', compPool, ']'];
-
+                if findMetIDs(modelCom, poolMet) == 0, modelCom = addMetabolite(modelCom, poolMet); end
+                exRxn = ['EXC_', regexprep(poolMet, ['\[',compPool,'\]'], ''), '[', compPool, ']'];
                 if findRxnIDs(modelCom, exRxn) == 0
-                    modelCom = addReaction(modelCom, exRxn, ...
-                        'metaboliteList', {poolMet}, ...
-                        'stoichCoeffList', -1, ...
-                        'lowerBound', 0, ...
-                        'upperBound', 0);
-                else
-                    modelCom = changeRxnBounds(modelCom, exRxn, 0, 'l');
-                    modelCom = changeRxnBounds(modelCom, exRxn, 0, 'u');
+                    modelCom = addReaction(modelCom, exRxn, 'metaboliteList', {poolMet}, ...
+                        'stoichCoeffList', -1, 'lowerBound', 0, 'upperBound', 0);
                 end
             end
-
-            transferRxn = ['ICLEFT_', tag, ...
-                     regexprep(poolMet, ['\[', compPool, '\]'], ''), ...
-                     '_', compFrom, '_to_', compPool];
-
+            transferRxn = ['ICLEFT_', tag, regexprep(poolMet, ['\[',compPool,'\]'], ''), ...
+                           '_', compFrom, '_to_', compPool];
             if findRxnIDs(modelCom, transferRxn) == 0
                 modelCom = addReaction(modelCom, transferRxn, ...
-                    'metaboliteList', {speciesMet, poolMet}, ...
-                    'stoichCoeffList', [1, -1], ...
-                    'lowerBound', -1000, ...
-                    'upperBound', 1000);
+                    'metaboliteList', {speciesMet, poolMet}, 'stoichCoeffList', [1,-1], ...
+                    'lowerBound', -1e5, 'upperBound', 1e5);
             end
         end
     end
-
-    fprintf('Added shared cleft pool [%s] from species compartment [%s]\n', ...
-        compPool, compFrom);
+    fprintf('Added shared cleft pool [%s] from [%s]\n', compPool, compFrom);
 end
 
-
 function modelCom = restoreGeneFieldsFromSpecies(modelCom, speciesModels, tags)
-% Rebuild genes, rxnGeneMat, rules, and grRules (with species prefixes)
-% from the individual models, since createMultipleSpeciesModel can drop them.
-    nRxnsCom    = numel(modelCom.rxns);
-    nSpecies    = numel(speciesModels);
-    nGenesPerSp = zeros(nSpecies, 1);
-
+    nRxnsCom = numel(modelCom.rxns); nSpecies = numel(speciesModels);
+    nGenesPerSp = zeros(nSpecies,1);
     for si = 1:nSpecies
         spModel = speciesModels{si};
-        if isfield(spModel, 'genes') && ~isempty(spModel.genes)
-            nGenesPerSp(si) = numel(spModel.genes);
-        else
-            nGenesPerSp(si) = 0;
-            spModel.genes      = {};
-            spModel.rxnGeneMat = sparse(numel(spModel.rxns), 0);
-            if ~isfield(spModel, 'rules'),   spModel.rules   = repmat({''}, numel(spModel.rxns), 1); end
-            if ~isfield(spModel, 'grRules'), spModel.grRules = repmat({''}, numel(spModel.rxns), 1); end
-            speciesModels{si} = spModel;
-        end
+        if isfield(spModel,'genes') && ~isempty(spModel.genes), nGenesPerSp(si) = numel(spModel.genes); end
     end
-
     nGenesTotal = sum(nGenesPerSp);
-    allGenes = cell(nGenesTotal, 1);
-    allGeneNames = cell(nGenesTotal, 1);
+    allGenes = cell(nGenesTotal,1); allGeneNames = cell(nGenesTotal,1);
     geneColStart = [0; cumsum(nGenesPerSp(1:end-1))] + 1;
-
     rxnGeneMatCom = sparse(nRxnsCom, nGenesTotal);
-    rules   = repmat({''}, nRxnsCom, 1);
-    grRules = repmat({''}, nRxnsCom, 1);
-
+    rules = repmat({''}, nRxnsCom, 1); grRules = repmat({''}, nRxnsCom, 1);
     comRxnMap = containers.Map(modelCom.rxns, num2cell(1:nRxnsCom));
-
     for si = 1:nSpecies
-        spModel = speciesModels{si};
-        tag  = tags{si};
-        gStart = geneColStart(si);
-        nGenes = nGenesPerSp(si);
-
+        spModel = speciesModels{si}; tag = tags{si};
+        gStart = geneColStart(si); nGenes = nGenesPerSp(si);
         for gi = 1:nGenes
             allGenes{gStart+gi-1} = [tag, spModel.genes{gi}];
-            if isfield(spModel, 'geneNames') && numel(spModel.geneNames) >= gi && ...
-               ~isempty(spModel.geneNames{gi})
+            if isfield(spModel,'geneNames') && numel(spModel.geneNames) >= gi && ~isempty(spModel.geneNames{gi})
                 allGeneNames{gStart+gi-1} = spModel.geneNames{gi};
             else
                 allGeneNames{gStart+gi-1} = spModel.genes{gi};
             end
         end
-
-        % One combined regex to prefix all genes at once.
         if nGenes > 0
-            escapedGenes  = cellfun(@regexpescape, spModel.genes, 'UniformOutput', false);
+            escapedGenes = cellfun(@regexpescape, spModel.genes, 'UniformOutput', false);
             [~, lenOrder] = sort(cellfun(@numel, spModel.genes), 'descend');
-            sortedEscaped = escapedGenes(lenOrder);
-            genePattern   = ['(?<![A-Za-z0-9_])(?:', strjoin(sortedEscaped, '|'), ')(?![A-Za-z0-9_])'];
+            genePattern = ['(?<![A-Za-z0-9_])(?:', strjoin(escapedGenes(lenOrder),'|'), ')(?![A-Za-z0-9_])'];
         else
             genePattern = '';
         end
-
         geneIdxOffset = gStart - 1;
-
         for ri = 1:numel(spModel.rxns)
             comRxnID = [tag, spModel.rxns{ri}];
             if ~isKey(comRxnMap, comRxnID), continue; end
             comRxnIdx = comRxnMap(comRxnID);
-
-            if nGenes > 0 && isfield(spModel, 'rxnGeneMat') && ~isempty(spModel.rxnGeneMat)
+            if nGenes > 0 && isfield(spModel,'rxnGeneMat') && ~isempty(spModel.rxnGeneMat)
                 geneCols = find(spModel.rxnGeneMat(ri,:));
-                if ~isempty(geneCols)
-                    rxnGeneMatCom(comRxnIdx, gStart-1+geneCols) = spModel.rxnGeneMat(ri, geneCols);
-                end
+                if ~isempty(geneCols), rxnGeneMatCom(comRxnIdx, gStart-1+geneCols) = spModel.rxnGeneMat(ri, geneCols); end
             end
-
-            if isfield(spModel, 'rules') && numel(spModel.rules) >= ri && ~isempty(spModel.rules{ri})
+            if isfield(spModel,'rules') && numel(spModel.rules) >= ri && ~isempty(spModel.rules{ri})
                 rules{comRxnIdx} = remapRuleIndices(spModel.rules{ri}, geneIdxOffset);
             end
-
-            if isfield(spModel, 'grRules') && numel(spModel.grRules) >= ri && ~isempty(spModel.grRules{ri})
+            if isfield(spModel,'grRules') && numel(spModel.grRules) >= ri && ~isempty(spModel.grRules{ri})
                 if ~isempty(genePattern)
                     grRules{comRxnIdx} = regexprep(spModel.grRules{ri}, genePattern, [tag, '$0']);
                 else
@@ -415,46 +326,36 @@ function modelCom = restoreGeneFieldsFromSpecies(modelCom, speciesModels, tags)
                 end
             end
         end
-        fprintf('  Gene mapping for species %s complete (%d rxns)\n', tag, numel(spModel.rxns));
+        fprintf('  Gene mapping for %s complete (%d rxns, %d genes)\n', tag, numel(spModel.rxns), nGenes);
     end
-
-    modelCom.genes = allGenes;
-    modelCom.geneNames = allGeneNames;
+    modelCom.genes = allGenes; modelCom.geneNames = allGeneNames;
     modelCom.rxnGeneMat = rxnGeneMatCom;
-
     if any(~cellfun(@isempty, rules)),   modelCom.rules   = rules;   end
     if any(~cellfun(@isempty, grRules)), modelCom.grRules = grRules; end
 end
 
-
-function out = remapRuleIndices(ruleIn, offset)
-% Shift each gene index x(N) to x(N+offset) for community indexing.
-    if offset == 0
-        out = ruleIn;
-        return;
-    end
+function out = remapRuleIndices(ruleIn, geneIdxOffset)
+    if geneIdxOffset == 0, out = ruleIn; return; end
     idxTokens = regexp(ruleIn, 'x\((\d+)\)', 'tokens');
-    tokStart = regexp(ruleIn, 'x\((\d+)\)', 'start');
-    tokEnd = regexp(ruleIn, 'x\((\d+)\)', 'end');
-    if isempty(idxTokens)
-        out = ruleIn;
-        return;
-    end
-    out = '';
-    prevEnd = 0;
+    tokStart  = regexp(ruleIn, 'x\((\d+)\)', 'start');
+    tokEnd    = regexp(ruleIn, 'x\((\d+)\)', 'end');
+    if isempty(idxTokens), out = ruleIn; return; end
+    out = ''; prevEnd = 0;
     for k = 1:numel(idxTokens)
-        out = [out, ruleIn(prevEnd+1:tokStart(k)-1), ...
-               sprintf('x(%d)', str2double(idxTokens{k}{1}) + offset)];
+        out = [out, ruleIn(prevEnd+1:tokStart(k)-1), sprintf('x(%d)', str2double(idxTokens{k}{1}) + geneIdxOffset)];
         prevEnd = tokEnd(k);
     end
     out = [out, ruleIn(prevEnd+1:end)];
 end
 
-
 function str = regexpescape(str)
-% Escape regex metacharacters in a string.
     metaChars = '.[{}()\^$|*+?-\]';
-    for ch = metaChars
-        str = strrep(str, ch, ['\', ch]);
-    end
+    for ch = metaChars, str = strrep(str, ch, ['\', ch]); end
+end
+
+function model = padMetFields(model, k)
+    if isfield(model,'metNames'),   model.metNames   = [model.metNames;   repmat({''},k,1)]; end
+    if isfield(model,'metFormulas'),model.metFormulas= [model.metFormulas;repmat({''},k,1)]; end
+    if isfield(model,'metCharges'), model.metCharges = [model.metCharges; zeros(k,1)]; end
+    if isfield(model,'metComps'),   model.metComps   = [model.metComps;   zeros(k,1)]; end
 end

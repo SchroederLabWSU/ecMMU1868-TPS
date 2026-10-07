@@ -12,22 +12,17 @@ Inputs: from the folder models/05_enzyme_constrained
 
 Outputs: Saved in models/06_community_TPS/enzyme_constrained_tps
 
-1. ecTPS_build.mat
-   The enzyme-constrained community model before constraints are applied.
+1. ecMMU1868-TPS.mat
+   Final enzyme-constrained TPS community model with equal-growth coupling, defined medium, protein-pool bound, and FBA objective baked in. This is the model used in all downstream analyses.
 
-2. ecMMU1868-TPS.mat
-   Final enzyme-constrained TPS community model with equal-growth coupling, defined medium, protein-pool bound, and FBA objective baked in. This is the model used in all downstream analyses. ecTPS_build.mat can also be used for analysis, but the equal-growth coupling must be applied before solving.
+The .mat file exceeds GitHub's 100 MB per-file limit and is therefore not stored in this repository. It is archived on Zenodo (https://doi.org/10.5281/zenodo.20606464). To reproduce it, run the script below.
 
-Both .mat files exceed GitHub's 100 MB per-file limit and are therefore not stored in this repository. They are archived on Zenodo (https://doi.org/10.5281/zenodo.20606464). To reproduce them, run the two scripts in order.
-
-The Matlab scripts run in order:
+The Matlab script:
 
 1. Tripartite_ecCom.m
-   Combines the three ecModels into one SteadyCom community and writes ecTPS_build.mat.
+   Combines the three ecModels into one SteadyCom community, then adds equal-growth coupling, defined medium, protein-pool bound, and FBA objective, and writes ecMMU1868-TPS.mat. Community assembly and constraint application are done in a single pass, so no intermediate build file is written.
 
-2. Tripartite_ecCom_equalGrowth.m
-   Loads ecTPS_build.mat, adds equal-growth coupling, defined medium, protein-pool bound, and FBA objective, then writes ecMMU1868-TPS.mat. The model is saved before the verify step so all annotation fields are preserved.
-
+Note: createMultipleSpeciesModel drops the model.ec metadata field during assembly. The enzyme constraints survive in the S-matrix as 1/kcat coefficients, which is what the downstream analyses use.
 
 The final model, ecMMU1868-TPS is used in subsequent analyses:
 

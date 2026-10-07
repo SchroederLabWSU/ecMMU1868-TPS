@@ -5,7 +5,7 @@ This evaluates whether the curated model (iMMU1867) reproduces
 physiologically consistent metabolic behavior.
 
 Validation tests:
-1. Biomass production using different carbon substrates
+1. Biomass production across a sweep of carbon supply, each substrate alone
 2. Respiratory quotient (RQ) during substrate oxidation
 3. Biomass response under oxygen limitation
 4. Single-nutrient omission analysis (from the defined minimal medium)
@@ -73,14 +73,16 @@ DEFINED_MEDIUM = {
 
 # Carbon substrates used for phenotypic validation
 # Format: substrate name, exchange ID, carbon atoms, uptake rate
-
 SUBSTRATES = [
-    ("glucose", "EX_glc__D_e", 6, 10.0), # All substrates are normalized to glucose uptake of 10 mmol/gDW/h.
-    ("lactate", "EX_lac__L_e", 3, 20.0),
-    ("glutamine", "EX_gln__L_e", 5, 12.0),
-    ("palmitate", "EX_hdca_e", 16, 3.75),
-    ("beta-hydroxybutyrate", "EX_bhb_e", 4, 15.0),
+    ("glucose", "EX_glc__D_e", 6, 10.0, 4.00),
+    ("lactate", "EX_lac__L_e", 3, 20.0, 4.00),
+    ("glutamine", "EX_gln__L_e", 5, 12.0, 3.60),
+    ("palmitate", "EX_hdca_e", 16, 3.75, 5.75),
+    ("beta-hydroxybutyrate", "EX_bhb_e", 4, 15.0, 4.50),
 ]
+
+CARBON_GRID = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24,
+               27, 30, 36, 42, 48, 54, 60]
 
 # Theoretical complete-oxidation reference.
 THEORETICAL_RQ = pd.DataFrame([
@@ -157,42 +159,67 @@ print(f"Metabolites: {len(model.metabolites)}")
 print(f"Genes:       {len(model.genes)}")
 
 
-# TEST 1: Evaluate biomass production using different carbon substrates
+# TEST 1: Evaluate biomass production across a sweep of carbon supply
 # -----------------------------------------------------------------
-print("\nTEST 1: Substrate-supported biomass")
+print("\nTEST 1: Substrate-supported biomass across carbon supply")
 
 growth_results = []
 
-for substrate_name, exchange_id, carbons, uptake in SUBSTRATES:
-    with model as m:
-        apply_medium(m, DEFINED_MEDIUM)
+for substrate_name, exchange_id, carbons, _uptake, _gamma in SUBSTRATES:
+    for carbon_supply in CARBON_GRID:
+        with model as m:
+            apply_medium(m, DEFINED_MEDIUM)
 
-        for _, other_exchange, _, _ in SUBSTRATES:
-            if other_exchange in m.reactions:
-                block_exchange(m, other_exchange)
+            # Close every carbon substrate, including the glucose the medium
+            # opens by default, so the swept substrate is the only one.
+            for _, other_exchange, _, _, _ in SUBSTRATES:
+                if other_exchange in m.reactions:
+                    block_exchange(m, other_exchange)
 
-        if exchange_id in m.reactions:
-            set_uptake(m, exchange_id, uptake)
+            molar_uptake = carbon_supply / carbons
+            if exchange_id in m.reactions:
+                set_uptake(m, exchange_id, molar_uptake)
 
-        try:
-            solution = solve_fba(m)
-            biomass = solution.objective_value
-            status = solution.status
-        except Exception:
-            biomass = np.nan
-            status = "failed"
+            try:
+                solution = solve_fba(m)
+                biomass = solution.objective_value
+                status = solution.status
+            except Exception:
+                biomass = np.nan
+                status = "failed"
 
-        growth_results.append({
-            "substrate": substrate_name,
-            "exchange_id": exchange_id,
-            "carbon_atoms": carbons,
-            "uptake_rate": uptake,
-            "biomass_h^-1": biomass,
-            "status": status,
-        })
+            growth_results.append({
+                "substrate": substrate_name,
+                "exchange_id": exchange_id,
+                "carbon_atoms": carbons,
+                "carbon_supply_Cmmol": carbon_supply,
+                "uptake_rate": molar_uptake,
+                "biomass_h⁻¹": biomass,
+                "status": status,
+            })
 
 df_growth = pd.DataFrame(growth_results)
-print(df_growth)
+print(df_growth.head())
+
+# Saturating supply is the first grid point at which a substrate reaches the plateau growth rate shared by all five.
+plateau = df_growth["biomass_h⁻¹"].max()
+saturation_results = []
+
+for substrate_name, exchange_id, carbons, _uptake, gamma in SUBSTRATES:
+    curve = df_growth[df_growth.substrate == substrate_name].sort_values(
+        "carbon_supply_Cmmol")
+    reached = curve[curve["biomass_h⁻¹"] >= plateau - 1e-6]
+    saturation_results.append({
+        "substrate": substrate_name,
+        "degree_of_reduction": gamma,
+        "plateau_biomass_h⁻¹": plateau,
+        "saturating_carbon_Cmmol": (int(reached.carbon_supply_Cmmol.iloc[0])
+            if len(reached) else np.nan),
+    })
+
+df_saturation = pd.DataFrame(saturation_results).sort_values(
+    "saturating_carbon_Cmmol")
+print(df_saturation)
 
 
 
@@ -203,7 +230,7 @@ print("\nTEST 2: Respiratory quotient")
 
 rq_results = []
 
-for substrate_name, exchange_id, carbons, uptake in SUBSTRATES:
+for substrate_name, exchange_id, carbons, uptake, _gamma in SUBSTRATES:
     with model as m:
         close_all_exchanges(m)
 
@@ -310,12 +337,12 @@ O2_LIMITS = [10, 5, 2, 1, 0.5, 0.2, 0]
 
 hypoxia_results = []
 
-for substrate_name, exchange_id, carbons, uptake in SUBSTRATES:
+for substrate_name, exchange_id, carbons, uptake, _gamma in SUBSTRATES:
     for o2_limit in O2_LIMITS:
         with model as m:
             apply_medium(m, DEFINED_MEDIUM)
 
-            for _, other_exchange, _, _ in SUBSTRATES:
+            for _, other_exchange, _, _, _ in SUBSTRATES:
                 if other_exchange in m.reactions:
                     block_exchange(m, other_exchange)
 
@@ -338,7 +365,7 @@ for substrate_name, exchange_id, carbons, uptake in SUBSTRATES:
                 "substrate": substrate_name,
                 "exchange_id": exchange_id,
                 "O2_limit": o2_limit,
-                "biomass_h^-1": biomass,
+                "biomass_h⁻¹": biomass,
                 "status": status,
             })
 
@@ -377,7 +404,7 @@ for reaction_id in DEFINED_MEDIUM:
 
         omission_results.append({
             "omitted_exchange": reaction_id,
-            "biomass_h^-1": biomass,
+            "biomass_h⁻¹": biomass,
             "fraction_of_baseline": fraction,
             "status": status,
         })
@@ -395,6 +422,7 @@ OUTPUT_XLSX.parent.mkdir(parents=True, exist_ok=True)
 
 with pd.ExcelWriter(OUTPUT_XLSX, engine="openpyxl") as writer:
     df_growth.to_excel(writer, sheet_name="substrate_growth", index=False)
+    df_saturation.to_excel(writer, sheet_name="substrate_saturation", index=False)
     df_rq.to_excel(writer, sheet_name="oxidation_RQ", index=False)
     THEORETICAL_RQ.to_excel(writer, sheet_name="theoretical_RQ", index=False)
     df_hypoxia.to_excel(writer, sheet_name="hypoxia_sweep", index=False)

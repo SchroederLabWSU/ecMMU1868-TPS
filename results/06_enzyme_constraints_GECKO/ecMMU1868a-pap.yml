@@ -1,9 +1,9 @@
 ---
 !!omap
 - metaData:
-    id: "iMM1865_astrocyte"
-    name: "Mus musculus"
-    date: "2026-04-21"
+    id: "iMMU1868a_pap"
+    name: "Astrocyte with PAP GSMM"
+    date: "2026-08-17"
     geckoLight: "false"
 - metabolites:
     - !!omap
@@ -9984,6 +9984,12 @@
       - annotation: !!omap
           - bigg.metabolite: "C04717"
           - metanetx.chemical: "MNXM165530"
+    - !!omap
+      - id: "C04717bulk_c"
+      - name: "13-L-Hydroperoxylinoleic Acid, bulk cytosolic pool"
+      - compartment: "c"
+      - formula: "C18H31O4"
+      - charge: -1
     - !!omap
       - id: "C04717oh_c"
       - name: "Linolenic Acid Hydroperoxide"
@@ -161735,6 +161741,54 @@
           - bigg.reaction: "C04717ATP"
           - sbo: "SBO:0000185"
     - !!omap
+      - id: "C04717tbulk_EXP_1"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717bulk_c: -1
+          - prot_Q3TLH6: -0.433018640078151
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "16592"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_EXP_2"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717bulk_c: -1
+          - prot_Q5EBJ0: -0.445154576990504
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "14077"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_REV_EXP_1"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool (reversible)"
+      - metabolites: !!omap
+          - C04717_c: -1
+          - C04717bulk_c: 1
+          - prot_Q3TLH6: -0.433018640078151
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "16592"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_REV_EXP_2"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool (reversible)"
+      - metabolites: !!omap
+          - C04717_c: -1
+          - C04717bulk_c: 1
+          - prot_Q5EBJ0: -0.445154576990504
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "14077"
+      - subsystem:
+          - ""
+    - !!omap
       - id: "C04717tc"
       - name: "Hdroperoxy-linolelic acid transport, cytosol"
       - metabolites: !!omap
@@ -161749,11 +161803,36 @@
       - annotation: !!omap
           - sbo: "SBO:0000185"
     - !!omap
+      - id: "C04717tcFABP5_EXP_1"
+      - name: "FABP5/FABP3-mediated 13(S)-HPODE transfer, PAP to cytosol"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717_pap: -1
+          - prot_Q3TLH6: -0.433018640078151
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "16592"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tcFABP5_EXP_2"
+      - name: "FABP5/FABP3-mediated 13(S)-HPODE transfer, PAP to cytosol"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717_pap: -1
+          - prot_Q5EBJ0: -0.445154576990504
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "14077"
+      - subsystem:
+          - ""
+    - !!omap
       - id: "C04717td"
       - name: "Transport of 13(S)-HPODE, Diffusion"
       - metabolites: !!omap
-          - C04717_c: -1
           - C04717_e: 1
+          - C04717bulk_c: -1
+          - prot_standard: -0.915962842404646
       - lower_bound: 0
       - upper_bound: 1000
       - subsystem:
@@ -161765,8 +161844,9 @@
       - id: "C04717td_REV"
       - name: "Transport of 13(S)-HPODE, Diffusion (reversible)"
       - metabolites: !!omap
-          - C04717_c: 1
           - C04717_e: -1
+          - C04717bulk_c: 1
+          - prot_standard: -0.915962842404646
       - lower_bound: 0
       - upper_bound: 1000
       - subsystem:
@@ -262853,7 +262933,7 @@
           - grdp_c: -1
           - ipdp_c: -1
           - ppi_c: 1
-          - prot_A0A1Y7VJZ1: -49.2493132518708
+          - prot_A0A1Y7VJZ1: -4.92493132518708
       - lower_bound: 0
       - upper_bound: 1000
       - gene_reaction_rule: "14593"
@@ -486111,7 +486191,7 @@
           - nadp_c: 1
           - nadph_c: -1
           - o2_c: -1
-          - prot_Q3TQK8: -23.3077485380117
+          - prot_Q3TQK8: -233.077485380117
           - sql_c: -1
       - lower_bound: 0
       - upper_bound: 1000
@@ -488988,7 +489068,7 @@
           - nadp_r: 1
           - nadph_r: -1
           - o2_r: -1
-          - prot_Q3TQK8: -233.077485380117
+          - prot_Q3TQK8: -23.3077485380117
           - sql_r: -1
       - lower_bound: 0
       - upper_bound: 1000
@@ -518640,7 +518720,7 @@
           - h_x: -1
           - nad_x: 1
           - nadh_x: -1
-          - prot_E0CXN5: -0.00250933048433048
+          - prot_E0CXN5: -0.0250933048433048
       - lower_bound: 0
       - upper_bound: 1000
       - gene_reaction_rule: "14555"
@@ -605650,11 +605730,47 @@
     - enzymes: !!omap
         - Q9CVX4: 1
   - !!omap
+    - id: "C04717tbulk_EXP_1"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q3TLH6: 1
+  - !!omap
+    - id: "C04717tbulk_EXP_2"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q5EBJ0: 1
+  - !!omap
+    - id: "C04717tbulk_REV_EXP_1"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q3TLH6: 1
+  - !!omap
+    - id: "C04717tbulk_REV_EXP_2"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q5EBJ0: 1
+  - !!omap
     - id: "C04717tc"
     - kcat: 6.2826
     - source: "DLKcat"
     - enzymes: !!omap
         - E9Q0H6: 1
+  - !!omap
+    - id: "C04717tcFABP5_EXP_1"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q3TLH6: 1
+  - !!omap
+    - id: "C04717tcFABP5_EXP_2"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - Q5EBJ0: 1
   - !!omap
     - id: "C04717tpap"
     - kcat: 74.0598
@@ -626116,8 +626232,9 @@
         - Q99LV7: 1
   - !!omap
     - id: "GRTT"
-    - kcat: 0.1173
-    - source: "DLKcat"
+    - kcat: 1.173
+    - source: "sensitivityTuning"
+    - notes: "preTuneKcat=0.1173 | source:DLKcat"
     - enzymes: !!omap
         - A0A1Y7VJZ1: 1
   - !!omap
@@ -691397,9 +691514,8 @@
         - Q5F204: 1
   - !!omap
     - id: "SMO"
-    - kcat: 0.76
-    - source: "sensitivityTuning"
-    - notes: "preTuneKcat=0.076 | source:brenda"
+    - kcat: 0.076
+    - source: "brenda"
     - eccodes: "1.14.14.17"
     - enzymes: !!omap
         - Q3TQK8: 1
@@ -691932,8 +692048,9 @@
         - O35423: 1
   - !!omap
     - id: "SQLEr"
-    - kcat: 0.076
-    - source: "brenda"
+    - kcat: 0.76
+    - source: "sensitivityTuning"
+    - notes: "preTuneKcat=0.076 | source:brenda"
     - eccodes: "1.14.14.17"
     - enzymes: !!omap
         - Q3TQK8: 1
@@ -698780,9 +698897,8 @@
         - E0CXN5: 1
   - !!omap
     - id: "r0202_REV"
-    - kcat: 3900
-    - source: "sensitivityTuning"
-    - notes: "preTuneKcat=390 | source:brenda"
+    - kcat: 390
+    - source: "brenda"
     - eccodes: "1.1.1.8"
     - enzymes: !!omap
         - E0CXN5: 1
@@ -712410,6 +712526,18 @@
         - standard: 1
   - !!omap
     - id: "ButACPhyd"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - standard: 1
+  - !!omap
+    - id: "C04717td"
+    - kcat: 9.2471
+    - source: "standard"
+    - enzymes: !!omap
+        - standard: 1
+  - !!omap
+    - id: "C04717td_REV"
     - kcat: 9.2471
     - source: "standard"
     - enzymes: !!omap

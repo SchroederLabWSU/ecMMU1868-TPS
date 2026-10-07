@@ -2,6 +2,6 @@ rxns	rxnNames	enzymes	oldKcat	newKcat	source
 CEPTE	Ethanolamine phosphotransferase	A0A0A6YXR0	0.0591325	0.591325	brenda
 CLS_hs	Cardiolipin synthase (homo sapiens)	A0A0C3SFZ5	4.1e-06	0.0041	brenda
 DPMVDx	Diphosphomevalonate decarboxylase	Q3UYC1	0.387833333333333	3.87833333333333	brenda
+GRTT	Geranyltranstransferase	A0A1Y7VJZ1	0.1173	1.173	DLKcat
 HMGCOARx	Hydroxymethylglutaryl CoA reductase (ir)	F2Z470	0.023	2.3	brenda
-SMO	Squalene monooxygenase	Q3TQK8	0.076	0.76	brenda
-r0202_REV	Sn-Glycerol-3-phosphate:NAD+ 2-oxidoreductase Glycerophospholipid metabolism EC:1.1.1.8 (reversible)	E0CXN5	390	3900	brenda
+SQLEr	Squalene epoxidase  endoplasmic reticular  NADP	Q3TQK8	0.076	0.76	brenda
