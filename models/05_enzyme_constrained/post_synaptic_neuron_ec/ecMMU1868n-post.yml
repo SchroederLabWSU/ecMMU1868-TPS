@@ -1,9 +1,9 @@
 ---
 !!omap
 - metaData:
-    id: "iMM1865_neuron_post"
-    name: "Mus musculus"
-    date: "2026-04-22"
+    id: "iMMU1868n_post"
+    name: "Post-synaptic neuron GSMM"
+    date: "2026-08-17"
     geckoLight: "false"
 - metabolites:
     - !!omap
@@ -9984,6 +9984,12 @@
       - annotation: !!omap
           - bigg.metabolite: "C04717"
           - metanetx.chemical: "MNXM165530"
+    - !!omap
+      - id: "C04717bulk_c"
+      - name: "13-L-Hydroperoxylinoleic Acid, bulk cytosolic pool"
+      - compartment: "c"
+      - formula: "C18H31O4"
+      - charge: -1
     - !!omap
       - id: "C04805_c"
       - name: "5-Hydroxyeicosatetraenoate"
@@ -161686,11 +161692,60 @@
       - annotation: !!omap
           - sbo: "SBO:0000185"
     - !!omap
+      - id: "C04717tbulk_EXP_1"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717bulk_c: -1
+          - prot_Q3TLH6: -0.430597226254871
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "16592"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_EXP_2"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool"
+      - metabolites: !!omap
+          - C04717_c: 1
+          - C04717bulk_c: -1
+          - prot_Q5EBJ0: -0.442665299748243
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "14077"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_REV_EXP_1"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool (reversible)"
+      - metabolites: !!omap
+          - C04717_c: -1
+          - C04717bulk_c: 1
+          - prot_Q3TLH6: -0.430597226254871
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "16592"
+      - subsystem:
+          - ""
+    - !!omap
+      - id: "C04717tbulk_REV_EXP_2"
+      - name: "FABP-mediated 13(S)-HPODE transfer, bulk cytosolic pool (reversible)"
+      - metabolites: !!omap
+          - C04717_c: -1
+          - C04717bulk_c: 1
+          - prot_Q5EBJ0: -0.442665299748243
+      - lower_bound: 0
+      - upper_bound: 1000
+      - gene_reaction_rule: "14077"
+      - subsystem:
+          - ""
+    - !!omap
       - id: "C04717td"
       - name: "Transport of 13(S)-HPODE, Diffusion"
       - metabolites: !!omap
-          - C04717_c: -1
           - C04717_e: 1
+          - C04717bulk_c: -1
+          - prot_standard: -0.91084083405921
       - lower_bound: 0
       - upper_bound: 1000
       - subsystem:
@@ -161702,8 +161757,9 @@
       - id: "C04717td_REV"
       - name: "Transport of 13(S)-HPODE, Diffusion (reversible)"
       - metabolites: !!omap
-          - C04717_c: 1
           - C04717_e: -1
+          - C04717bulk_c: 1
+          - prot_standard: -0.91084083405921
       - lower_bound: 0
       - upper_bound: 1000
       - subsystem:
@@ -193666,17 +193722,6 @@
           - "Exchange/demand reaction"
       - annotation: !!omap
           - bigg.reaction: "DM_C02712_c"
-          - sbo: "SBO:0000628"
-    - !!omap
-      - id: "DM_C04717_postc"
-      - name: "Demand for Hdroperoxy-linolelic acid, postc"
-      - metabolites: !!omap
-          - C04717_postc: -1
-      - lower_bound: 0
-      - upper_bound: 1000
-      - subsystem:
-          - ""
-      - annotation: !!omap
           - sbo: "SBO:0000628"
     - !!omap
       - id: "DM_CE1261_c"
@@ -605004,6 +605049,30 @@
     - enzymes: !!omap
         - A0A1B0GX15: 1
   - !!omap
+    - id: "C04717tbulk_EXP_1"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - Q3TLH6: 1
+  - !!omap
+    - id: "C04717tbulk_EXP_2"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - Q5EBJ0: 1
+  - !!omap
+    - id: "C04717tbulk_REV_EXP_1"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - Q3TLH6: 1
+  - !!omap
+    - id: "C04717tbulk_REV_EXP_2"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - Q5EBJ0: 1
+  - !!omap
     - id: "C05299te"
     - kcat: 0.0065
     - source: "DLKcat"
@@ -711548,6 +711617,18 @@
         - standard: 1
   - !!omap
     - id: "ButACPhyd"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - standard: 1
+  - !!omap
+    - id: "C04717td"
+    - kcat: 9.2991
+    - source: "standard"
+    - enzymes: !!omap
+        - standard: 1
+  - !!omap
+    - id: "C04717td_REV"
     - kcat: 9.2991
     - source: "standard"
     - enzymes: !!omap
